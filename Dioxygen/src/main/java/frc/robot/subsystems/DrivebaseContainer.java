@@ -9,24 +9,20 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
+
 import frc.robot.RobotMap.DriveMotors;
 
-/**
- * Add your docs here.
- */
 public class DrivebaseContainer extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   public final WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(DriveMotors.frontLeft.ordinal());
   public final WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(DriveMotors.frontRight.ordinal());
   public final WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.ordinal());
   public final WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.ordinal());
 
+  public final SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
+  public final SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
   @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  }
+  public void initDefaultCommand() {}
 }
