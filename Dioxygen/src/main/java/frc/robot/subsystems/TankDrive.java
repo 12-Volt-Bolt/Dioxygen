@@ -6,12 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.subsystems;
-import frc.robot.Robot;
-import frc.robot.subsystems.DrivebaseContainer;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import frc.robot.Robot;
+import frc.robot.statics_and_classes.Finals;
+import frc.robot.subsystems.DrivebaseContainer;
 
 public class TankDrive extends Subsystem {
 
@@ -25,15 +26,13 @@ public class TankDrive extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public static void Drive() {
-    
+  public static void Drive(double yInput, double zInput) {
+    drive.arcadeDrive(yInput, zInput);
   }
 
-  public static void DriveStraight() {
-
+  public static void Stop() {
+    drivebaseContainer.rightSide.set(Finals.zero);
+    drivebaseContainer.leftSide.set(Finals.zero);
   }
-
-  public static void Turn() {
-
-  }
+  
 }
