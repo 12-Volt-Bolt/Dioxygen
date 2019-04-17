@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,6 +33,7 @@ public class Robot extends TimedRobot {
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public static AHRS navXGyro;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -37,6 +41,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    try {
+      navXGyro = new AHRS(SPI.Port.kMXP);
+
+    } catch (RuntimeException ex) {
+      DriverStation.reportError("Error instantiating NAV-X Gyro (MXP)", true);
+    }
   }
 
   /**
@@ -63,6 +73,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    
+    navXGyro.reset();
   }
 
   /**
