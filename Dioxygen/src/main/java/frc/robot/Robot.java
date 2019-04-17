@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -24,6 +25,8 @@ import frc.robot.subsystems.DrivebaseContainer;
 public class Robot extends TimedRobot {
   public static final DrivebaseContainer drivebaseContainer = new DrivebaseContainer();
   public static OI m_oi;
+
+  public static final XboxController driveController = new XboxController(0);
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();

@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/*
 package frc.robot.statics_and_classes;
 
 public class MapDataParser {
@@ -13,3 +13,4 @@ public class MapDataParser {
 
     }
 }
+*/

@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.TankDrive;
@@ -16,6 +18,8 @@ public class BasicTankDrive extends Command {
     requires(Robot.drivebaseContainer);
   }
 
+  private XboxController driveCon = Robot.driveController;
+
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -24,7 +28,7 @@ public class BasicTankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // TankDrive.drive();
+    TankDrive.Drive(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()
