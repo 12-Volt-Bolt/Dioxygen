@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.subsystems.TankDrive;
+import frc.robot.subsystems.MecanumDriveSub;
 
-public class BasicTankDrive extends Command {
-  public BasicTankDrive() {
+public class BasicMecDrive extends Command {
+  public BasicMecDrive() {
     requires(Robot.drivebaseContainer);
   }
-
+  
   private XboxController driveCon = Robot.driveController;
 
   // Called just before this Command runs the first time
@@ -28,7 +28,7 @@ public class BasicTankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.Drive(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight));
+    MecanumDriveSub.Drive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -40,13 +40,13 @@ public class BasicTankDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    TankDrive.Stop();
+    MecanumDriveSub.Stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    TankDrive.Stop();
+    MecanumDriveSub.Stop();
   }
 }
