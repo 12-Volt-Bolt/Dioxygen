@@ -7,10 +7,14 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.Finals;
+import frc.robot.statics_and_classes.Equations;
 
 /**
  * Add your docs here.
@@ -18,8 +22,13 @@ import frc.robot.statics_and_classes.Finals;
 public class MecanumDriveSub extends Subsystem {
   
   private static DrivebaseContainer drivebaseContainer = Robot.drivebaseContainer;
+  private static Equations equations;
 
   public static MecanumDrive mecDrive = new MecanumDrive(drivebaseContainer.frontLeftMotor, drivebaseContainer.rearLeftMotor, drivebaseContainer.frontRightMotor, drivebaseContainer.rearRightMotor);
+
+  private static double newZero = Robot.navXGyro.getAngle();
+  private static double lastInput;
+  private static double kToleranceDegrees = 5;
 
   public static void Drive(double xInput, double yInput, double zInput) {
     mecDrive.driveCartesian(yInput, xInput, zInput, 0.0);
@@ -39,4 +48,60 @@ public class MecanumDriveSub extends Subsystem {
     drivebaseContainer.rightSide.set(Finals.zero);
     drivebaseContainer.leftSide.set(Finals.zero);
   }
+
+  
+  // Move robot forward/backwards without rotation drifting by asigning a local
+  // north and turning towards that
+  // Strafe robot
+  // Robot can still turn without inturupting movement
+  // Relies on newZero to work
+  public static void noDriftDrive(double yLeft, double xLeft, double xRight, AHRS gyro) {
+    mecDrive.setSafetyEnabled(false);
+    // Resets local north if turning
+
+    double rotationSpeed = locRotationLock(xLeft, -xRight, gyro);
+
+    // newZero = Robot.navXGyro.getAngle();
+    mecDrive.driveCartesian(Equations.deadzone(xLeft), Equations.deadzone(-yLeft), rotationSpeed);
+  }
+
+  public static double locRotationLock(double xInput, double zInput, AHRS gyro) {
+    // if Z axis joystick is moving or has moved within the past 0.4 seconds set doLocRot to "true", else leave as "false"
+    boolean doLocRot = false;
+    double rotationSpeed;
+    double angleOff;
+    if (equations.deadzone(zInput) != 0) {
+      lastInput = System.currentTimeMillis();
+    } else if (System.currentTimeMillis() - lastInput > 400) {
+      doLocRot = true;
+    }
+
+    // if not locking rotation, roationSpeed equals Z axis input
+    if (doLocRot == false) {
+      newZero = gyro.getAngle();
+      rotationSpeed = zInput;
+    } else {
+      angleOff = gyro.getAngle() - newZero;
+      // if "angleOff" is greater than kToleranceDegrees, rotationSpeed equals zero and robot does not turn
+      if (Math.abs(angleOff) < kToleranceDegrees) {
+        rotationSpeed = 0;
+      } else {
+        // if strafing, set locRot power lower beacuse the wheels are already turning, they dont need to pass the minimum required torque
+        double turnPower;
+        if (xInput != 0) {
+          turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.25); // turnPower equals 
+        } else {
+          turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.35);
+        }
+        rotationSpeed = equations.clamp(-1, 1, turnPower);
+      }
+    }
+    SmartDashboard.putNumber("newZero", newZero);
+    SmartDashboard.putNumber("Rotation speed", -rotationSpeed);
+
+    return -rotationSpeed;
+  }
+  
+
+
 }
