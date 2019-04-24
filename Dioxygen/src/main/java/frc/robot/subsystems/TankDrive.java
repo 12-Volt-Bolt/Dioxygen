@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.Finals;
 import frc.robot.subsystems.DrivebaseContainer;
 
 public class TankDrive extends Subsystem {
@@ -29,10 +28,7 @@ public class TankDrive extends Subsystem {
   public static void Drive(double yInput, double zInput) {
     drive.arcadeDrive(yInput, zInput);
   }
+  
 
-  public static void Stop() {
-    drivebaseContainer.rightSide.set(Finals.zero);
-    drivebaseContainer.leftSide.set(Finals.zero);
-  }
   
 }

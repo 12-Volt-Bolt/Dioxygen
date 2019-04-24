@@ -44,11 +44,6 @@ public class MecanumDriveSub extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public static void Stop() {
-    drivebaseContainer.rightSide.set(Finals.zero);
-    drivebaseContainer.leftSide.set(Finals.zero);
-  }
-
   
   // Move robot forward/backwards without rotation drifting by asigning a local
   // north and turning towards that
@@ -69,7 +64,6 @@ public class MecanumDriveSub extends Subsystem {
     // if Z axis joystick is moving or has moved within the past 0.4 seconds set doLocRot to "true", else leave as "false"
     boolean doLocRot = false;
     double rotationSpeed;
-    double angleOff;
     if (equations.deadzone(zInput) != 0) {
       lastInput = System.currentTimeMillis();
     } else if (System.currentTimeMillis() - lastInput > 400) {
@@ -81,25 +75,27 @@ public class MecanumDriveSub extends Subsystem {
       newZero = gyro.getAngle();
       rotationSpeed = zInput;
     } else {
-      angleOff = gyro.getAngle() - newZero;
-      // if "angleOff" is greater than kToleranceDegrees, rotationSpeed equals zero and robot does not turn
-      if (Math.abs(angleOff) < kToleranceDegrees) {
-        rotationSpeed = 0;
-      } else {
-        // if strafing, set locRot power lower beacuse the wheels are already turning, they dont need to pass the minimum required torque
-        double turnPower;
-        if (xInput != 0) {
-          turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.25); // turnPower equals 
-        } else {
-          turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.35);
-        }
-        rotationSpeed = equations.clamp(-1, 1, turnPower);
-      }
+      rotationSpeed = turnSpeed(gyro, equations.isZero(xInput), newZero);
     }
-    SmartDashboard.putNumber("newZero", newZero);
-    SmartDashboard.putNumber("Rotation speed", -rotationSpeed);
 
     return -rotationSpeed;
+  }
+
+  public static double turnSpeed(AHRS gyro, Boolean isStrafing, double angleToTurnTo) {
+    double angleOff = gyro.getAngle() - angleToTurnTo;
+    // if "angleOff" is greater than kToleranceDegrees, rotationSpeed equals zero and robot does not turn
+    if (Math.abs(angleOff) < kToleranceDegrees) {
+      return 0;
+    } else {
+      // if strafing, set locRot power lower beacuse the wheels are already turning, they dont need to pass the minimum required torque
+      double turnPower;
+      if (isStrafing = true) {
+        turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.25); // turnPower equals 
+      } else {
+        turnPower = equations.deadzone(equations.exponetialAbs((angleOff) / 180, 2), 0.35);
+      }
+      return equations.clamp(-1, 1, turnPower);
+    }
   }
   
 

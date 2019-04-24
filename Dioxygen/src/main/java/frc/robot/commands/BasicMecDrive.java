@@ -11,11 +11,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
 
 public class BasicMecDrive extends Command {
+  
+  private DrivebaseContainer drivebase = Robot.drivebaseContainer;
+
   public BasicMecDrive() {
-    requires(Robot.drivebaseContainer);
+    requires(drivebase);
   }
   
   private XboxController driveCon = Robot.driveController;
@@ -40,13 +44,13 @@ public class BasicMecDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    MecanumDriveSub.Stop();
+    drivebase.Stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    MecanumDriveSub.Stop();
+    drivebase.Stop();
   }
 }
