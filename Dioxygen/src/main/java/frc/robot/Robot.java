@@ -10,6 +10,7 @@ package frc.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -42,7 +43,11 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     try {
-      navXGyro = new AHRS(SPI.Port.kMXP);
+<<<<<<< HEAD
+      navXGyro = new AHRS(SerialPort.Port.kMXP); //new AHRS(SerialPort.Port.kUSB); //new AHRS(SPI.Port kMXP);
+=======
+      // navXGyro = new AHRS(SPI.Port.kMXP);
+>>>>>>> 7d9e33bcc60291d5d6e8ce9a6d80925a69b266c5
 
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating NAV-X Gyro (MXP)", true);

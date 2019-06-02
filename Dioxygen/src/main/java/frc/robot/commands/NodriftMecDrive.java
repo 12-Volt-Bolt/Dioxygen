@@ -16,10 +16,11 @@ import frc.robot.Robot;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
 
-public class GyroMecDrive extends Command {
-
+public class NodriftMecDrive extends Command {
+  
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
-  public GyroMecDrive() {
+
+  public NodriftMecDrive() {
     requires(drivebase);
   }
   
@@ -34,7 +35,7 @@ public class GyroMecDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDriveSub.Drive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
+    MecanumDriveSub.noDriftDrive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro);
   }
 
   // Make this return true when this Command no longer needs to run execute()
