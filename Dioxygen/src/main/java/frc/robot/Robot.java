@@ -43,12 +43,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     try {
-<<<<<<< HEAD
-      navXGyro = new AHRS(SerialPort.Port.kMXP); //new AHRS(SerialPort.Port.kUSB); //new AHRS(SPI.Port kMXP);
-=======
-      // navXGyro = new AHRS(SPI.Port.kMXP);
->>>>>>> 7d9e33bcc60291d5d6e8ce9a6d80925a69b266c5
-
+      navXGyro = new AHRS(SerialPort.Port.kMXP);
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating NAV-X Gyro (MXP)", true);
     }
