@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -27,6 +29,7 @@ public class TankDrive extends Subsystem {
 
   public static void Drive(double yInput, double zInput) {
     drive.arcadeDrive(yInput, zInput);
+    System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebaseContainer.frontLeftMotor.getBaseID());
   }
   
 

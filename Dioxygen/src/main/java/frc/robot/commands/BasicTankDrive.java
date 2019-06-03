@@ -19,6 +19,7 @@ public class BasicTankDrive extends Command {
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
 
   public BasicTankDrive() {
+    //System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebase.frontLeftMotor.getBaseID());
     requires(drivebase);
   }
 
@@ -32,6 +33,7 @@ public class BasicTankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebase.frontLeftMotor.getBaseID());
     TankDrive.Drive(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight));
   }
 

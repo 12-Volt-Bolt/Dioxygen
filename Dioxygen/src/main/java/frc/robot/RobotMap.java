@@ -25,10 +25,10 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
   public enum DriveMotors {
-    frontLeft (0)
-    , frontRight (1)
-    , rearLeft (2)
-    , rearRight (3);
+    frontLeft (12)
+    , frontRight (13)
+    , rearLeft (14)
+    , rearRight (15);
 
     private final int motorID;
     DriveMotors(int motorID) {

@@ -17,7 +17,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.BasicMecDrive;
+import frc.robot.commands.BasicTankDrive;
 import frc.robot.subsystems.DrivebaseContainer;
+import frc.robot.subsystems.OneMotorTest;
+import frc.robot.statics_and_classes.Equations;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,12 +31,16 @@ import frc.robot.subsystems.DrivebaseContainer;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static Equations equations = new Equations();
   public static final DrivebaseContainer drivebaseContainer = new DrivebaseContainer();
   public static OI m_oi;
 
   public static final XboxController driveController = new XboxController(0);
 
+  private OneMotorTest motorTester = new OneMotorTest(15);
+
   Command m_autonomousCommand;
+  static Command basicTankDrive = new BasicTankDrive();
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   public static AHRS navXGyro;
 
@@ -43,10 +51,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     try {
-      navXGyro = new AHRS(SerialPort.Port.kMXP);
+      //navXGyro = new AHRS(SerialPort.Port.kMXP);
     } catch (RuntimeException ex) {
       DriverStation.reportError("Error instantiating NAV-X Gyro (MXP)", true);
     }
+    drivebaseContainer.setValues();
+
+    
+    System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebaseContainer.frontLeftMotor.getBaseID());
   }
 
   /**
@@ -74,7 +86,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
     
-    navXGyro.reset();
+    //navXGyro.reset();
   }
 
   /**
@@ -122,6 +134,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    basicTankDrive.start();
   }
 
   /**
@@ -130,6 +144,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    //motorTester.testMotor();
+    //drivebaseContainer.frontLeftMotor.set(0.2);
   }
 
   /**
