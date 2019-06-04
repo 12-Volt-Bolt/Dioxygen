@@ -5,26 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.ballLauncher;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.subsystems.DrivebaseContainer;
-import frc.robot.subsystems.MecanumDriveSub;
 
-public class GyroMecDrive extends Command {
-
-  private DrivebaseContainer drivebase = Robot.drivebaseContainer;
-  public GyroMecDrive() {
-    requires(drivebase);
+public class BallFeeder extends Command {
+  public BallFeeder() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
-  
-  private XboxController driveCon = Robot.driveController;
-  private AHRS NavXGyro = Robot.navXGyro;
 
   // Called just before this Command runs the first time
   @Override
@@ -34,7 +23,6 @@ public class GyroMecDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDriveSub.Drive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -46,13 +34,11 @@ public class GyroMecDrive extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    drivebase.Stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    drivebase.Stop();
   }
 }

@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.BasicMecDrive;
-import frc.robot.commands.BasicTankDrive;
+import frc.robot.commands.driveCommands.BasicMecDrive;
+import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
 import frc.robot.subsystems.TankDrive;

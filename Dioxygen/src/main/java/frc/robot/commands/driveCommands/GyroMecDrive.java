@@ -5,29 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.driveCommands;
 
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
-import frc.robot.subsystems.TankDrive;
 
-public class TurnToAngle extends Command {
-  private double angleToTurnTo;
-  
-  private AHRS gyro = Robot.navXGyro;
-  
+public class GyroMecDrive extends Command {
+
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
-
-  public TurnToAngle(double angle) {
+  public GyroMecDrive() {
     requires(drivebase);
-
-    angleToTurnTo = angle;
   }
+  
+  private XboxController driveCon = Robot.driveController;
+  private AHRS NavXGyro = Robot.navXGyro;
 
   // Called just before this Command runs the first time
   @Override
@@ -37,7 +34,7 @@ public class TurnToAngle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.Drive(0, MecanumDriveSub.turnSpeed(gyro, false, angleToTurnTo));
+    MecanumDriveSub.Drive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
   }
 
   // Make this return true when this Command no longer needs to run execute()

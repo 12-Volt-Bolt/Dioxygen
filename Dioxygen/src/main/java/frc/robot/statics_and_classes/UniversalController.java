@@ -16,7 +16,8 @@ public class UniversalController {
 
     private enum DownloadedControllerProfiles
     {
-        xboxOne;
+        controllerXboxOneForWindows
+        , playstation;
     }
 
     /**
@@ -31,7 +32,7 @@ public class UniversalController {
         m_ds = Robot.driverStation;
         m_port = port;
 
-        String controllerProfile = m_ds.getJoystickName(port);
+        //String controllerProfile = m_ds.getJoystickName(port).replaceAll("[^a-zA-Z0-9]","");
     }
 
     /**
@@ -41,13 +42,29 @@ public class UniversalController {
      * @param controllerProfile The profile that this controller will use.
      * @return The new controller.
      */
+    /*
     public UniversalController(int port, String controllerProfile)
     {
         equations = Robot.equations;
         m_ds = Robot.driverStation;
         m_port = port;
     }
+    */
 
+    /*
+    private void checkUCType(String controllerName)
+    {
+        switch (DownloadedControllerProfiles.valueOf(controllerName)) {
+            case controllerXboxOneForWindows:
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
+    */
+    
     /**
      * Gets the double value of the axis.
      *

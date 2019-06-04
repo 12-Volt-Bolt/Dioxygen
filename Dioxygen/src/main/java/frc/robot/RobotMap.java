@@ -24,7 +24,8 @@ public class RobotMap {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
-  public enum DriveMotors {
+  public enum DriveMotors
+  {
     frontLeft    (12)
     , frontRight (13)
     , rearLeft   (14)
@@ -32,11 +33,31 @@ public class RobotMap {
 
     int motorID;
     
-    DriveMotors(int motorID) {
+    DriveMotors(int motorID)
+    {
       this.motorID = motorID;
     }
 
-    public int getMotorID() {
+    public int getMotorID()
+    {
+      return this.motorID;
+    }
+  }
+
+  public enum BallLauncherMap
+  {
+    right  (2)
+    , left (1);
+
+    int motorID;
+
+    BallLauncherMap(int motorID)
+    {
+      this.motorID = motorID;
+    }
+
+    public int getMotorID()
+    {
       return this.motorID;
     }
   }
