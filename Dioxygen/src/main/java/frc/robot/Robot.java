@@ -24,6 +24,7 @@ import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
 import frc.robot.subsystems.TankDrive;
+import frc.robot.subsystems.BallLauncher.LauncherMotors;
 //import frc.robot.subsystems.OneMotorTest;
 import frc.robot.statics_and_classes.Equations;
 import frc.robot.statics_and_classes.UniversalController;
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   public static final DrivebaseContainer drivebaseContainer = new DrivebaseContainer();
   public static final TankDrive tankDrive = new TankDrive();
   public static final MecanumDriveSub mecDrive = new MecanumDriveSub();
+  public static final LauncherMotors ballLaunchMotors = new LauncherMotors();
 
   //UI elements
   public static OI m_oi;

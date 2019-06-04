@@ -8,11 +8,17 @@
 package frc.robot.commands.ballLauncher;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
+import frc.robot.subsystems.BallLauncher.LauncherMotors;
 
 public class LauncherSpinup extends Command {
+
+  private static LauncherMotors launchMotors = Robot.ballLaunchMotors;
+
   public LauncherSpinup() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(launchMotors);
   }
 
   // Called just before this Command runs the first time
