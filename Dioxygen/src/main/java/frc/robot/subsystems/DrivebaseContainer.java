@@ -17,28 +17,17 @@ import frc.robot.statics_and_classes.Finals;
 
 public class DrivebaseContainer extends Subsystem {
 
-  public static WPI_TalonSRX frontLeftMotor;
-  public static WPI_TalonSRX frontRightMotor;
-  public static WPI_TalonSRX rearLeftMotor;
-  public static WPI_TalonSRX rearRightMotor;
+  public static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(DriveMotors.frontLeft.getMotorID());
+  public static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(DriveMotors.frontRight.getMotorID());
+  public static WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.getMotorID());
+  public static WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.getMotorID());
 
-  public static SpeedControllerGroup leftSide;
-  public static SpeedControllerGroup rightSide;
+  public static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
+  public static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
   
   public void initDefaultCommand() {
   }
-
-  public void setValues() {
-    frontLeftMotor = new WPI_TalonSRX(DriveMotors.frontLeft.ordinal());
-    frontRightMotor = new WPI_TalonSRX(DriveMotors.frontRight.ordinal());
-    rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.ordinal());
-    rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.ordinal());
-
-    leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
-    rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
-    System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + frontLeftMotor.getBaseID());
-  }
-
+  
   public static void Stop() {
     rightSide.set(Finals.zero);
     leftSide.set(Finals.zero);

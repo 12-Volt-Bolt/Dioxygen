@@ -14,6 +14,11 @@ public class UniversalController {
     private DriverStation m_ds;
     private int m_port;
 
+    private enum DownloadedControllerProfiles
+    {
+        xboxOne;
+    }
+
     /**
      * Creates a new generic controller instance.
      *
@@ -23,8 +28,10 @@ public class UniversalController {
     public UniversalController(int port)
     {
         equations = Robot.equations;
-        m_ds = DriverStation.getInstance();
+        m_ds = Robot.driverStation;
         m_port = port;
+
+        String controllerProfile = m_ds.getJoystickName(port);
     }
 
     /**
@@ -37,7 +44,7 @@ public class UniversalController {
     public UniversalController(int port, String controllerProfile)
     {
         equations = Robot.equations;
-        m_ds = DriverStation.getInstance();
+        m_ds = Robot.driverStation;
         m_port = port;
     }
 

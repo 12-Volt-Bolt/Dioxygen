@@ -19,15 +19,14 @@ import frc.robot.subsystems.TankDrive;
 public class TurnToAngle extends Command {
   private double angleToTurnTo;
   
-  private XboxController driveCon = Robot.driveController;
   private AHRS gyro = Robot.navXGyro;
   
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
 
   public TurnToAngle(double angle) {
-    angleToTurnTo = angle;
-
     requires(drivebase);
+
+    angleToTurnTo = angle;
   }
 
   // Called just before this Command runs the first time

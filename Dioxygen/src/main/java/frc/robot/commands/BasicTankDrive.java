@@ -15,15 +15,14 @@ import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.TankDrive;
 
 public class BasicTankDrive extends Command {
-  
+
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
+  private TankDrive tankDrive = Robot.tankDrive;
+  private XboxController driveCon = Robot.driveController;
 
   public BasicTankDrive() {
-    //System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebase.frontLeftMotor.getBaseID());
     requires(drivebase);
   }
-
-  private XboxController driveCon = Robot.driveController;
 
   // Called just before this Command runs the first time
   @Override
@@ -33,8 +32,7 @@ public class BasicTankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("System.out.println(frontLeftMotor.getBaseID()); " + drivebase.frontLeftMotor.getBaseID());
-    TankDrive.Drive(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight));
+    tankDrive.Drive(driveCon.getY(Hand.kLeft), -driveCon.getX(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()

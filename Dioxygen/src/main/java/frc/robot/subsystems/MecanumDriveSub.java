@@ -11,9 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.Finals;
 import frc.robot.statics_and_classes.Equations;
 
 /**
@@ -26,11 +24,11 @@ public class MecanumDriveSub extends Subsystem {
 
   public static MecanumDrive mecDrive = new MecanumDrive(drivebaseContainer.frontLeftMotor, drivebaseContainer.rearLeftMotor, drivebaseContainer.frontRightMotor, drivebaseContainer.rearRightMotor);
 
-  private static double newZero = Robot.navXGyro.getAngle();
+  private static double newZero;
   private static double lastInput;
   private static double kToleranceDegrees = 5;
 
-  public static void Drive(double xInput, double yInput, double zInput) {
+  public static void Drive(double yInput, double xInput, double zInput) {
     mecDrive.driveCartesian(yInput, xInput, zInput, 0.0);
   }
 
@@ -44,6 +42,11 @@ public class MecanumDriveSub extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public static void setNewZero(double newNewZero)
+  {
+    newZero = newNewZero;
+  }
+
   
   // Move robot forward/backwards without rotation drifting by asigning a local
   // north and turning towards that
@@ -54,7 +57,7 @@ public class MecanumDriveSub extends Subsystem {
     mecDrive.setSafetyEnabled(false);
     // Resets local north if turning
 
-    double rotationSpeed = locRotationLock(xLeft, -xRight, gyro);
+        double rotationSpeed = locRotationLock(xLeft, -xRight, gyro);
 
     // newZero = Robot.navXGyro.getAngle();
     mecDrive.driveCartesian(Equations.deadzone(xLeft), Equations.deadzone(-yLeft), rotationSpeed);
