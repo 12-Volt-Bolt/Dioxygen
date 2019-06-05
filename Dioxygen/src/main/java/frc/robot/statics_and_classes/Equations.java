@@ -23,7 +23,7 @@ public class Equations {
         } else if (input < min) {
             return min;
         } else {
-            return 0;
+            return input;
         }
     }
 
@@ -33,7 +33,7 @@ public class Equations {
         } else if (input < min) {
             return min;
         } else {
-            return 0;
+            return input;
         }
     }
 

@@ -22,7 +22,7 @@ public class LauncherMotors extends Subsystem {
   // here. Call these from Commands.
 
   public static final VictorSPX leftMotor  = new VictorSPX(BallLauncherMap.left.getMotorID());
-  public static final VictorSPX rightMotor = new VictorSPX(BallLauncherMap.left.getMotorID());
+  public static final VictorSPX rightMotor = new VictorSPX(BallLauncherMap.right.getMotorID());
 
   @Override
   public void initDefaultCommand() {
@@ -38,7 +38,7 @@ public class LauncherMotors extends Subsystem {
 
   public void runMotors(double speed)
   {
-    leftMotor.set(ControlMode.PercentOutput, speed);
+    leftMotor.set(ControlMode.PercentOutput, -speed);
     rightMotor.set(ControlMode.PercentOutput, speed);
   }
 }

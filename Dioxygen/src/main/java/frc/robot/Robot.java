@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.robot.commands.ballLauncher.LauncherSpinup;
 import frc.robot.commands.driveCommands.BasicMecDrive;
 import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.DrivebaseContainer;
@@ -27,7 +28,9 @@ import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.BallLauncher.LauncherMotors;
 //import frc.robot.subsystems.OneMotorTest;
 import frc.robot.statics_and_classes.Equations;
+import frc.robot.statics_and_classes.Safeties;
 import frc.robot.statics_and_classes.UniversalController;
+import frc.robot.statics_and_classes.Safeties.SafetySwitches;
 import frc.robot.RobotMap;
 
 /**
@@ -42,11 +45,12 @@ public class Robot extends TimedRobot {
   public static Equations equations = new Equations();
   public static RobotMap robotMap = new RobotMap();
   public static RobotMap.DriveMotors driveMotors;
+  public static Safeties safetySystem = new Safeties();
 
   // Subsystems
   public static final DrivebaseContainer drivebaseContainer = new DrivebaseContainer();
   public static final TankDrive tankDrive = new TankDrive();
-  public static final MecanumDriveSub mecDrive = new MecanumDriveSub();
+  //public static final MecanumDriveSub mecDrive = new MecanumDriveSub();
   public static final LauncherMotors ballLaunchMotors = new LauncherMotors();
 
   //UI elements
@@ -56,17 +60,24 @@ public class Robot extends TimedRobot {
   public static final XboxController driveController = new XboxController(0);
   public static final UniversalController testController = new UniversalController(0);
 
+  public static final SafetySwitches ballLauncherSafety = SafetySwitches.newSwitch();
+
   // private OneMotorTest motorTester = new OneMotorTest(15);
 
   //Commands
   static Command basicTankDrive = new BasicTankDrive();
-  static Command basicMecDrive = new BasicMecDrive();
+  //static Command basicMecDrive = new BasicMecDrive();
+  static Command ballLauncherSpinup = new LauncherSpinup();
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   //Robot Sensors
   public static AHRS navXGyro;
   public static DriverStation driverStation = DriverStation.getInstance();
+
+  // press and hold prevention
+  public static boolean startPressed = false;
+  public static boolean launcherOn = false;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -157,8 +168,11 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    safetySystem.allSwitchesOn();
 
-    basicMecDrive.start();
+    basicTankDrive.start();
+
+
   }
 
   /**
@@ -167,8 +181,26 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-    // motorTester.testMotor();
-    // drivebaseContainer.frontLeftMotor.set(0.2);
+
+    if (driveController.getStartButton() == false)
+    {
+      startPressed = false;
+    } else if (startPressed == false) {
+      safetySystem.alternateSwitch(ballLauncherSafety);
+      startPressed = true;
+    }
+
+    boolean tempLauncherSafety = safetySystem.checkSwitch(ballLauncherSafety);
+    if (tempLauncherSafety == false && launcherOn == false)
+    {
+      launcherOn = true;
+      ballLauncherSpinup.start();
+      System.out.println("Starting ball launcher command");
+    } else if (tempLauncherSafety == true && launcherOn == true){
+      launcherOn = false;
+      ballLauncherSpinup.cancel();
+      System.out.println("Stopping ball launcher command");
+    }
   }
 
   /**
