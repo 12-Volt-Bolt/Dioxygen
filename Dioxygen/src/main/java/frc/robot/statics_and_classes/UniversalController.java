@@ -10,8 +10,8 @@ import edu.wpi.first.hal.HAL;
  */
 public class UniversalController {
 
-    private Equations equations;
-    private DriverStation m_ds;
+    private static final Equations equations = new Equations();
+    private static DriverStation m_ds = Robot.driverStation;
     private int m_port;
 
     private enum DownloadedControllerProfiles
@@ -28,8 +28,6 @@ public class UniversalController {
      */
     public UniversalController(int port)
     {
-        equations = Robot.equations;
-        m_ds = Robot.driverStation;
         m_port = port;
 
         //String controllerProfile = m_ds.getJoystickName(port).replaceAll("[^a-zA-Z0-9]","");
