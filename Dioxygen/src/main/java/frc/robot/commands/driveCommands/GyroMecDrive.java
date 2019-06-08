@@ -15,10 +15,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
+import frc.robot.subsystems.DrivebaseContainer.driveSubsystemKeys;
 
 public class GyroMecDrive extends Command {
 
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
+  private MecanumDriveSub mecDrive = Robot.mecDrive;
   public GyroMecDrive() {
     requires(drivebase);
   }
@@ -29,12 +31,13 @@ public class GyroMecDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    drivebase.setKey(driveSubsystemKeys.mecanumSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDriveSub.Drive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
+    mecDrive.driveCartesian(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
   }
 
   // Make this return true when this Command no longer needs to run execute()

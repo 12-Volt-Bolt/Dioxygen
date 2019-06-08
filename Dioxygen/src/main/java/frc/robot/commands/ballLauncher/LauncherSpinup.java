@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.Equations;
-import frc.robot.statics_and_classes.Safeties;
-import frc.robot.statics_and_classes.Safeties.SafetySwitches;
+import frc.robot.statics_and_classes.RobotSwitches;
+import frc.robot.statics_and_classes.RobotSwitches.Switches;
 import frc.robot.subsystems.BallLauncher.LauncherMotors;
 
 public class LauncherSpinup extends Command {
@@ -20,14 +20,14 @@ public class LauncherSpinup extends Command {
   private static LauncherMotors launchMotors = Robot.ballLaunchMotors;
   private static XboxController drivController = Robot.driveController;
   private static Equations equations = Robot.equations;
-  private static Safeties safetySystem = Robot.safetySystem;
+  private static RobotSwitches switchSystem = Robot.switchSystem;
 
-  private static double maxMotorPower = 50;
+  private static double inputMaxMotorPower = 0.5;
   private static double minMotorPower = 0.2;
-  private static int dPad = -1;
+  private static double maxMotorPower = inputMaxMotorPower - minMotorPower;
   private static boolean dPadPressed = false;
   private static int motorPower = 0;
-  private static SafetySwitches launcherSafety = Robot.ballLauncherSafety;
+  private static Switches launcherSafety = Robot.ballLauncherSafety;
 
   public LauncherSpinup() {
     // Use requires() here to declare subsystem dependencies
@@ -45,48 +45,23 @@ public class LauncherSpinup extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    dPad = drivController.getPOV();
-
-    if (dPad == -1)
-    {
-      dPadPressed = false;
-    } else if (dPadPressed == false) 
-    {
-      dPadPressed = true;
-      System.out.print("DPad being pressed: ");
-
-      switch (dPad) {
-        case 0:
-          motorPower++;
-          System.out.println("Increment ball launcher power.");
-          break;
-        case 180:
-          motorPower--;
-          System.out.println("decrement ball launcher power.");
-          break;
-      
-        default:
-          System.out.println("Not valid dpad input.");
-          break;
-      }
-
-      motorPower = equations.clamp(motorPower, 0, 10);
-    }
+    dPadSpeed(drivController.getPOV());
 
     if (motorPower == 0)
     {
       launchMotors.stopMotors();
     } else {
-      launchMotors.runMotors(minMotorPower + (motorPower / maxMotorPower));
+      launchMotors.runMotors(motorPower / 10.0 * maxMotorPower + 0.2);
     }
 
+    stopOnB();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     boolean stopCommand = false;
-    if (safetySystem.checkSwitch(launcherSafety) == true)
+    if (switchSystem.checkSwitch(launcherSafety) == true)
     {
       stopCommand = true;
     }
@@ -106,5 +81,38 @@ public class LauncherSpinup extends Command {
   protected void interrupted() {
     motorPower = 0;
     launchMotors.stopMotors();
+  }
+
+  private void dPadSpeed(int dPad)
+  {
+    if (dPad == -1)
+    {
+      dPadPressed = false;
+    } else if (dPadPressed == false) 
+    {
+      dPadPressed = true;
+
+      switch (dPad) {
+        case 0:
+          motorPower++;
+          break;
+        case 180:
+          motorPower--;
+          break;
+      
+        default:
+          break;
+      }
+    }
+    motorPower = equations.clamp(motorPower, 0, 10);
+  }
+
+  private void stopOnB()
+  {
+    if (drivController.getBButton() == true)
+    {
+      launchMotors.stopMotors();
+      motorPower = 0;
+    }
   }
 }

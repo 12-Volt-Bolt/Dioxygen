@@ -13,11 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
+import frc.robot.subsystems.DrivebaseContainer.driveSubsystemKeys;
 
 public class BasicMecDrive extends Command {
   
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
-  //private MecanumDriveSub mecDrive = Robot.mecDrive;
+  private MecanumDriveSub mecDrive = Robot.mecDrive;
 
   public BasicMecDrive() {
     requires(drivebase);
@@ -28,12 +29,13 @@ public class BasicMecDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    drivebase.setKey(driveSubsystemKeys.mecanumSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //mecDrive.Drive(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kLeft), -driveCon.getX(Hand.kRight));
+    mecDrive.driveCartesian(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kLeft), -driveCon.getX(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -15,6 +15,7 @@ import frc.robot.Robot;
 import frc.robot.subsystems.DrivebaseContainer;
 import frc.robot.subsystems.MecanumDriveSub;
 import frc.robot.subsystems.TankDrive;
+import frc.robot.subsystems.DrivebaseContainer.driveSubsystemKeys;
 
 public class TurnToAngle extends Command {
   private double angleToTurnTo;
@@ -22,6 +23,8 @@ public class TurnToAngle extends Command {
   private AHRS gyro = Robot.navXGyro;
   
   private DrivebaseContainer drivebase = Robot.drivebaseContainer;
+  private MecanumDriveSub mecDrive = Robot.mecDrive;
+  private TankDrive tankDrive = Robot.tankDrive;
 
   public TurnToAngle(double angle) {
     requires(drivebase);
@@ -32,12 +35,13 @@ public class TurnToAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    drivebase.setKey(driveSubsystemKeys.tankSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.Drive(0, MecanumDriveSub.turnSpeed(gyro, false, angleToTurnTo));
+    tankDrive.arcadeDrive(0, mecDrive.turnSpeed(gyro, false, angleToTurnTo));
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -37,6 +37,24 @@ public class Equations {
         }
     }
 
+    /**
+     * Normalize all values if the magnitude of any value is greater than 1.0.
+     */
+    public void normalize(double[] wheelSpeeds) {
+      double maxMagnitude = Math.abs(wheelSpeeds[0]);
+      for (int i = 1; i < wheelSpeeds.length; i++) {
+        double temp = Math.abs(wheelSpeeds[i]);
+        if (maxMagnitude < temp) {
+          maxMagnitude = temp;
+        }
+      }
+      if (maxMagnitude > 1.0) {
+        for (int i = 0; i < wheelSpeeds.length; i++) {
+          wheelSpeeds[i] = wheelSpeeds[i] / maxMagnitude;
+        }
+      }
+    }
+
     public static double exponetialAbs(double input, double power) {
         return Math.abs(Math.pow(input, power));
     }
