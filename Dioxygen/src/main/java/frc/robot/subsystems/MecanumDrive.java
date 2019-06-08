@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj.drive.Vector2d;
 import frc.robot.Robot;
 import frc.robot.RobotMap.DriveMotors;
 import frc.robot.statics_and_classes.Equations;
-import frc.robot.subsystems.DrivebaseContainer.driveSubsystemKeys;
+import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 
 /**
  * Add your docs here.
  */
-public class MecanumDriveSub extends Subsystem {
+public class MecanumDrive extends Subsystem {
 
   private static double newZero;
   private static double lastInput;
@@ -147,7 +147,7 @@ public class MecanumDriveSub extends Subsystem {
 
     Equations.normalize(wheelSpeeds);
 
-    DrivebaseContainer.setAllMotors(wheelSpeeds, driveSubsystemKeys.mecanumSub);
+    Drivebase.setAllMotors(wheelSpeeds, driveSubsystemKeys.mecanumSub);
   }
 
 }
