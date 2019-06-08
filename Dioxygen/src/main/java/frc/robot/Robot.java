@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.commands.ballLauncher.LauncherSpinup;
+import frc.robot.commands.ball_launcher.LauncherSpinup;
 import frc.robot.commands.driveCommands.BasicMecDrive;
 import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.BallLauncher.LauncherMotors;
+import frc.robot.subsystems.ball_launcher.LauncherMotors;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.UniversalController;
 import frc.robot.statics_and_classes.RobotSwitches.Switches;

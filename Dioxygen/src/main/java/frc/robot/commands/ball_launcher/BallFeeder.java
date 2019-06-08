@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.ballLauncher;
+package frc.robot.commands.ball_launcher;
 
 import edu.wpi.first.wpilibj.command.Command;
 

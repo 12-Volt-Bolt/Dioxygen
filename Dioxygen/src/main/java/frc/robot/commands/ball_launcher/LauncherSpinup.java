@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.ballLauncher;
+package frc.robot.commands.ball_launcher;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,7 +13,7 @@ import frc.robot.Robot;
 import frc.robot.statics_and_classes.Equations;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.RobotSwitches.Switches;
-import frc.robot.subsystems.BallLauncher.LauncherMotors;
+import frc.robot.subsystems.ball_launcher.LauncherMotors;
 
 public class LauncherSpinup extends Command {
 
