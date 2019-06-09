@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.ball_launcher.LauncherSpinup;
 import frc.robot.commands.control_commands.BallLauncher;
+import frc.robot.commands.control_commands.BallRelease;
 import frc.robot.commands.control_commands.CompressorController;
 import frc.robot.commands.control_commands.Drive;
 import frc.robot.commands.driveCommands.BasicMecDrive;
@@ -29,6 +30,7 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.commands.pnumatics.CompressorOnTillDone;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
+import frc.robot.subsystems.ball_launcher.SolenoidControl;
 import frc.robot.statics_and_classes.RobotDials;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.UniversalController;
@@ -48,6 +50,7 @@ public class Robot extends TimedRobot {
   public static Drivebase drivebase = new Drivebase();
   public static LauncherMotors launcher = new LauncherMotors();
   public static CompressorControl compressorControl = new CompressorControl();
+  public static SolenoidControl solenoids = new SolenoidControl();
 
   // UI elements
   public static OI m_oi;
@@ -59,6 +62,7 @@ public class Robot extends TimedRobot {
   // Switches and Dials
   public static final Switches ballLauncherSafety = Switches.newSwitch();
   public static final Switches doMecanumDrive = Switches.newSwitch();
+  public static final Switches releaseBall = Switches.newSwitch();
   public static final Dials compressorMode = Dials.newDial(2);
 
   // 
@@ -67,6 +71,7 @@ public class Robot extends TimedRobot {
   public static Command basicTankDrive = new BasicTankDrive();
   public static Command basicMecDrive = new BasicMecDrive();
   public static Command ballLauncherSpinup = new LauncherSpinup();
+  public static Command ballRelease = new BallRelease();
   //public static Command compressorOnTillDone = new CompressorOnTillDone(CompressorControl.compressor1);
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -179,6 +184,7 @@ public class Robot extends TimedRobot {
     drive.start();
     ballLauncher.start();
     compressorController.start();
+    ballRelease.start();
   }
 
   /**

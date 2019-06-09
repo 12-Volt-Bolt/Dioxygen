@@ -33,6 +33,8 @@ public class Drivebase extends Subsystem {
 
   public static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
   public static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
+
+  private static int rightSideInverter = -1;
   
   public void initDefaultCommand() {
   }
@@ -47,6 +49,11 @@ public class Drivebase extends Subsystem {
     leftSide.set(Finals.zero);
   }
 
+  public static void flipRightSide()
+  {
+    rightSideInverter = -rightSideInverter;
+  }
+
   public static void setAllMotors(double[] motorSpeeds, driveSubsystemKeys subsystemKey)
   {
     if(currentKey == subsystemKey)
@@ -55,9 +62,9 @@ public class Drivebase extends Subsystem {
       Equations.normalize(speeds);
       
       frontLeftMotor.set(speeds[DriveMotors.frontLeft.ordinal()]);
-      frontRightMotor.set(speeds[DriveMotors.frontRight.ordinal()]);
+      frontRightMotor.set(speeds[DriveMotors.frontRight.ordinal()] * rightSideInverter);
       rearLeftMotor.set(speeds[DriveMotors.rearLeft.ordinal()]);
-      rearRightMotor.set(speeds[DriveMotors.rearRight.ordinal()]);
+      rearRightMotor.set(speeds[DriveMotors.rearRight.ordinal()] * rightSideInverter);
     } else
     {
       System.out.println("Subsystem key '" + subsystemKey + "' does not match the current key '" + currentKey + "'.");

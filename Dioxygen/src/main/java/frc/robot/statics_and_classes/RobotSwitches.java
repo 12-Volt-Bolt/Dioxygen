@@ -107,8 +107,9 @@ public class RobotSwitches {
      * @param input The changing value that will be compared.
      * @param compareValue The final value that the 'input' is compared to.
      */
-    public static void alternateSwitch(Switches yourSwitch, Boolean input, Boolean compareValue)
+    public static boolean alternateSwitch(Switches yourSwitch, Boolean input, Boolean compareValue)
     {
+        boolean output = false;
         boolean alternated = switchAlternated[yourSwitch.ordinal()];
         if (input != compareValue)
         {
@@ -116,8 +117,10 @@ public class RobotSwitches {
         } else if (alternated == false) {
             alternateSwitch(yourSwitch);
             alternated = true;
+            output = true;
         }
         switchAlternated[yourSwitch.ordinal()] = alternated;
+        return output;
     }
 
     /**

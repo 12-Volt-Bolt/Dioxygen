@@ -18,9 +18,6 @@ import frc.robot.RobotMap.Pnumatics;
 public class CompressorControl extends Subsystem {
 
   public static Compressor compressor1 = new Compressor(Pnumatics.compressor.getID());
-  
-  public Solenoid topSolenoid = new Solenoid(Pnumatics.topSolenoid.getID());
-  public Solenoid bottomSolenoid = new Solenoid(Pnumatics.bottomSolenoid.getID());
 
   @Override
   public void initDefaultCommand() {
