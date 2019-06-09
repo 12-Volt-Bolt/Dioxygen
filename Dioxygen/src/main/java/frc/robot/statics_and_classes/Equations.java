@@ -18,23 +18,53 @@ public class Equations {
     }
 
     public static double clamp(double input, double min, double max) {
+        double output = 0;
         if (input > max) {
-            return max;
+            output = max;
         } else if (input < min) {
-            return min;
+            output = min;
         } else {
-            return input;
+            output = input;
         }
+        return output;
     }
 
     public static int clamp(int input, int min, int max) {
+        int output = 0;
         if (input > max) {
-            return max;
+            output = max;
         } else if (input < min) {
-            return min;
+            output = min;
         } else {
-            return input;
+            output = input;
         }
+        return output;
+    }
+
+    public static boolean insideRange(int input, int min, int max)
+    {
+        boolean output = false;
+        if (input <= max && input >= min)
+        {
+            output = true;
+        }
+        return output;
+    }
+
+    public static int wrap(int input, int min, int max)
+    {
+        min--;
+        int output = input;
+        int range = max - min;
+        while (insideRange(output, min, max) == false)
+        {
+            if (input >= max){
+                output -= range;
+            } else {
+                output += range;
+            }
+        }
+        return output;
     }
 
     /**

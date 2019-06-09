@@ -38,7 +38,7 @@ public class RobotMap {
       this.motorID = motorID;
     }
 
-    public int getMotorID()
+    public int getID()
     {
       return this.motorID;
     }
@@ -56,9 +56,28 @@ public class RobotMap {
       this.motorID = motorID;
     }
 
-    public int getMotorID()
+    public int getID()
     {
       return this.motorID;
+    }
+  }
+
+  public enum Pnumatics
+  {
+    compressor       (0)
+    , topSolenoid    (0)
+    , bottomSolenoid (1);
+
+    int pnumaticID;
+
+    Pnumatics(int pnumaticID)
+    {
+      this.pnumaticID = pnumaticID;
+    }
+
+    public int getID()
+    {
+      return this.pnumaticID;
     }
   }
 }

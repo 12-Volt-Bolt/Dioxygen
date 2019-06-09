@@ -21,8 +21,8 @@ public class LauncherMotors extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public static final VictorSPX leftMotor  = new VictorSPX(BallLauncherMap.left.getMotorID());
-  public static final VictorSPX rightMotor = new VictorSPX(BallLauncherMap.right.getMotorID());
+  public static final VictorSPX leftMotor  = new VictorSPX(BallLauncherMap.left.getID());
+  public static final VictorSPX rightMotor = new VictorSPX(BallLauncherMap.right.getID());
 
   @Override
   public void initDefaultCommand() {

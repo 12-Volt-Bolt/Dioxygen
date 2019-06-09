@@ -26,10 +26,10 @@ public class Drivebase extends Subsystem {
 
   private static driveSubsystemKeys currentKey;
 
-  public static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(DriveMotors.frontLeft.getMotorID());
-  public static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(DriveMotors.frontRight.getMotorID());
-  public static WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.getMotorID());
-  public static WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.getMotorID());
+  public static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(DriveMotors.frontLeft.getID());
+  public static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(DriveMotors.frontRight.getID());
+  public static WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.getID());
+  public static WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.getID());
 
   public static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
   public static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
@@ -54,10 +54,10 @@ public class Drivebase extends Subsystem {
       double[] speeds = motorSpeeds;
       Equations.normalize(speeds);
       
-      frontLeftMotor.set(speeds[DriveMotors.frontLeft.getMotorID()]);
-      frontRightMotor.set(speeds[DriveMotors.frontRight.getMotorID()]);
-      rearLeftMotor.set(speeds[DriveMotors.rearLeft.getMotorID()]);
-      rearRightMotor.set(speeds[DriveMotors.rearRight.getMotorID()]);
+      frontLeftMotor.set(speeds[DriveMotors.frontLeft.ordinal()]);
+      frontRightMotor.set(speeds[DriveMotors.frontRight.ordinal()]);
+      rearLeftMotor.set(speeds[DriveMotors.rearLeft.ordinal()]);
+      rearRightMotor.set(speeds[DriveMotors.rearRight.ordinal()]);
     } else
     {
       System.out.println("Subsystem key '" + subsystemKey + "' does not match the current key '" + currentKey + "'.");

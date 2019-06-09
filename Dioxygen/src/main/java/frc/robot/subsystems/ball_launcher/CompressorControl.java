@@ -7,18 +7,37 @@
 
 package frc.robot.subsystems.ball_launcher;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap.Pnumatics;
 
 /**
  * Add your docs here.
  */
-public class BallFeeder extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
+public class CompressorControl extends Subsystem {
+
+  public static Compressor compressor1 = new Compressor(Pnumatics.compressor.getID());
+  
+  public Solenoid topSolenoid = new Solenoid(Pnumatics.topSolenoid.getID());
+  public Solenoid bottomSolenoid = new Solenoid(Pnumatics.bottomSolenoid.getID());
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
   }
+
+  public static void compressorOn(Compressor compressor)
+  {
+    compressor.setClosedLoopControl(true);
+  }
+
+  public static void compressorOff(Compressor compressor)
+  {
+    compressor.setClosedLoopControl(false);
+    System.out.println("Compressor '" + compressor.getName() + "' is now off.");
+  }
+
+  
 }

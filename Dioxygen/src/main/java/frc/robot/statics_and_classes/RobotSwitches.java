@@ -21,16 +21,16 @@ public class RobotSwitches {
      */
     public enum Switches
     {
-        safety0
-        , safety1
-        , safety2
-        , safety3
-        , safety4
-        , safety5
-        , safety6
-        , safety7
-        , safety8
-        , safety9;
+        switch0
+        , switch1
+        , switch2
+        , switch3
+        , switch4
+        , switch5
+        , switch6
+        , switch7
+        , switch8
+        , switch9;
 
         private static int usedSwitches = 0;
 
@@ -49,12 +49,14 @@ public class RobotSwitches {
     /**
      * Turns all switches off.
      */
-    public static void allRobotSwitchesOn()
+    public static void allSwitchesOn()
     {
         for (int i = 0; i < switchValues.length; i++)
         {
             switchValues[i] = true;
         }
+
+        System.out.println("All switches are now on.");
     }
 
     /**
@@ -65,6 +67,7 @@ public class RobotSwitches {
     public static void switchOn(Switches yourSwitch)
     {
         switchValues[yourSwitch.ordinal()] = true;
+        //System.out.println(yourSwitch + " is now on.");
     }
 
     /**
@@ -75,6 +78,7 @@ public class RobotSwitches {
     public static void switchOff(Switches yourSwitch)
     {
         switchValues[yourSwitch.ordinal()] = false;
+        //System.out.println(yourSwitch + " is now off.");
     }
     /**
      * Alternates the value of a switch.
@@ -86,10 +90,10 @@ public class RobotSwitches {
         boolean switchValue = switchValues[yourSwitch.ordinal()];
         if (switchValue == false)
         {
-            System.out.println(yourSwitch + " is now on.");
+            //System.out.println(yourSwitch + " is now on.");
             switchValue = true;
         } else {
-            System.out.println(yourSwitch + " is now off.");
+            //System.out.println(yourSwitch + " is now off.");
             switchValue = false;
         }
 
@@ -110,8 +114,8 @@ public class RobotSwitches {
         {
             alternated = false;
         } else if (alternated == false) {
-          alternateSwitch(yourSwitch);
-          alternated = true;
+            alternateSwitch(yourSwitch);
+            alternated = true;
         }
         switchAlternated[yourSwitch.ordinal()] = alternated;
     }

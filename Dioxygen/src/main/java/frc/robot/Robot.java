@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -19,13 +20,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.ball_launcher.LauncherSpinup;
+import frc.robot.commands.control_commands.BallLauncher;
+import frc.robot.commands.control_commands.CompressorController;
+import frc.robot.commands.control_commands.Drive;
 import frc.robot.commands.driveCommands.BasicMecDrive;
 import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.Drivebase;
+import frc.robot.commands.pnumatics.CompressorOnTillDone;
+import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
+import frc.robot.statics_and_classes.RobotDials;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.UniversalController;
 import frc.robot.statics_and_classes.RobotSwitches.Switches;
+import frc.robot.statics_and_classes.RobotDials.Dials;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -39,6 +47,7 @@ public class Robot extends TimedRobot {
   // Required subsystems
   public static Drivebase drivebase = new Drivebase();
   public static LauncherMotors launcher = new LauncherMotors();
+  public static CompressorControl compressorControl = new CompressorControl();
 
   // UI elements
   public static OI m_oi;
@@ -47,18 +56,25 @@ public class Robot extends TimedRobot {
   public static final XboxController driveController = new XboxController(0);
   public static final UniversalController testController = new UniversalController(0);
 
-  // Switches
+  // Switches and Dials
   public static final Switches ballLauncherSafety = Switches.newSwitch();
   public static final Switches doMecanumDrive = Switches.newSwitch();
+  public static final Dials compressorMode = Dials.newDial(2);
 
-  // private OneMotorTest motorTester = new OneMotorTest(15);
+  // 
 
   // Commands
-  static Command basicTankDrive = new BasicTankDrive();
-  static Command basicMecDrive = new BasicMecDrive();
-  static Command ballLauncherSpinup = new LauncherSpinup();
+  public static Command basicTankDrive = new BasicTankDrive();
+  public static Command basicMecDrive = new BasicMecDrive();
+  public static Command ballLauncherSpinup = new LauncherSpinup();
+  //public static Command compressorOnTillDone = new CompressorOnTillDone(CompressorControl.compressor1);
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  // Control Commands
+  private static Command drive = new Drive();
+  private static Command ballLauncher = new BallLauncher();
+  private static Command compressorController = new CompressorController(CompressorControl.compressor1);
 
   // Robot Sensors
   public static AHRS navXGyro;
@@ -67,7 +83,6 @@ public class Robot extends TimedRobot {
   // press and hold prevention
   public static boolean startPressed = false;
   public static boolean launcherOn = false;
-  public static boolean doMechanum = false;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -158,8 +173,12 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotSwitches.allRobotSwitchesOn();
+    RobotSwitches.allSwitchesOn();
+    RobotDials.resetAllDials();
 
+    drive.start();
+    ballLauncher.start();
+    compressorController.start();
   }
 
   /**
@@ -171,40 +190,6 @@ public class Robot extends TimedRobot {
 
     RobotSwitches.alternateSwitch(ballLauncherSafety, driveController.getStartButton(), true);
     RobotSwitches.alternateSwitch(doMecanumDrive, driveController.getBackButton(), true);
-    ballLaucher();
-    driving();
-  }
-
-  private void driving()
-  {
-    boolean tempDoMecanum = RobotSwitches.checkSwitch(doMecanumDrive);
-    if (tempDoMecanum == false && doMechanum == false)
-    {
-      doMechanum = true;
-      basicMecDrive.cancel();
-      basicTankDrive.start();
-      System.out.println("Switching to tank mode.");
-    } else if (tempDoMecanum == true && doMechanum == true){
-      doMechanum = false;
-      basicTankDrive.cancel();
-      basicMecDrive.start();
-      System.out.println("Switching to Mecanum mode.");
-    }
-  }
-
-  private void ballLaucher()
-  {
-    boolean tempLauncherSafety = RobotSwitches.checkSwitch(ballLauncherSafety);
-    if (tempLauncherSafety == false && launcherOn == false)
-    {
-      launcherOn = true;
-      ballLauncherSpinup.start();
-      System.out.println("Starting ball launcher command");
-    } else if (tempLauncherSafety == true && launcherOn == true){
-      launcherOn = false;
-      ballLauncherSpinup.cancel();
-      System.out.println("Stopping ball launcher command");
-    }
   }
 
   /**
