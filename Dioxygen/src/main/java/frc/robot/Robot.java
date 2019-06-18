@@ -9,15 +9,12 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.ball_launcher.LauncherSpinup;
 import frc.robot.commands.control_commands.BallLauncher;
@@ -27,15 +24,12 @@ import frc.robot.commands.control_commands.Drive;
 import frc.robot.commands.driveCommands.BasicMecDrive;
 import frc.robot.commands.driveCommands.BasicTankDrive;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.commands.pnumatics.CompressorOnTillDone;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
 import frc.robot.subsystems.ball_launcher.SolenoidControl;
 import frc.robot.statics_and_classes.RobotDials;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.UniversalController;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
-import frc.robot.statics_and_classes.RobotDials.Dials;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -60,12 +54,10 @@ public class Robot extends TimedRobot {
   public static final UniversalController testController = new UniversalController(0);
 
   // Switches and Dials
-  public static final Switches ballLauncherSafety = Switches.newSwitch();
-  public static final Switches doMecanumDrive = Switches.newSwitch();
-  public static final Switches releaseBall = Switches.newSwitch();
-  public static final Dials compressorMode = Dials.newDial(2);
-
-  // 
+  public static final int ballLauncherSafety = RobotSwitches.newSwitch();
+  public static final int doMecanumDrive = RobotSwitches.newSwitch();
+  public static final int releaseBall = RobotSwitches.newSwitch();
+  public static final int compressorMode = RobotDials.newDial(2);
 
   // Commands
   public static Command basicTankDrive = new BasicTankDrive();

@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.Equations;
 import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
 
 public class LauncherSpinup extends Command {
@@ -25,7 +24,7 @@ public class LauncherSpinup extends Command {
   private static double maxMotorPower = inputMaxMotorPower - minMotorPower;
   private static boolean dPadPressed = false;
   private static int motorPower = 0;
-  private static Switches launcherSafety = Robot.ballLauncherSafety;
+  private static final int launcherSafety = Robot.ballLauncherSafety;
 
   public LauncherSpinup() {
     // Use requires() here to declare subsystem dependencies

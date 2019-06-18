@@ -14,7 +14,6 @@ import frc.robot.Robot;
 import frc.robot.commands.pnumatics.CompressorOnTillDone;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.statics_and_classes.RobotDials;
-import frc.robot.statics_and_classes.RobotDials.Dials;
 
 public class CompressorController extends Command {
 
@@ -22,7 +21,7 @@ public class CompressorController extends Command {
 
   private static Compressor compressor;
 
-  private static Dials compressorMode = Robot.compressorMode;
+  private static final int compressorMode = Robot.compressorMode;
   private static boolean doCompressor = false;
 
   public CompressorController(Compressor newCompressor) {

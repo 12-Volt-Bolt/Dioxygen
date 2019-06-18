@@ -12,12 +12,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.pnumatics.BallReleaseSolenoids;
 import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
 
 public class BallRelease extends Command {
 
   private static XboxController driveController = Robot.driveController;
-  private static Switches releaseBall = Robot.releaseBall;
+  private static final int releaseBall = Robot.releaseBall;
 
   private static BallReleaseSolenoids ballReleaseSolenoids = new BallReleaseSolenoids();
 

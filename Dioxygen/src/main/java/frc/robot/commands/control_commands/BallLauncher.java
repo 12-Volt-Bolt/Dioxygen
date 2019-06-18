@@ -10,12 +10,11 @@ package frc.robot.commands.control_commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
 
 public class BallLauncher extends Command {
 
   private static Command ballLauncherSpinup = Robot.ballLauncherSpinup;
-  private static Switches ballLauncherSafety = Robot.ballLauncherSafety;
+  private static final int ballLauncherSafety = Robot.ballLauncherSafety;
 
   private static boolean launcherOn = false;
 

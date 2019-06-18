@@ -10,13 +10,12 @@ package frc.robot.commands.control_commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
 
 public class Drive extends Command {
 
   private static Command basicMecDrive = Robot.basicMecDrive;
   private static Command basicTankDrive = Robot.basicTankDrive;
-  private static Switches doMecanumDrive = Robot.doMecanumDrive;
+  private static final int doMecanumDrive = Robot.doMecanumDrive;
 
   boolean doMechanum = false;
 

@@ -12,38 +12,30 @@ package frc.robot.statics_and_classes;
  */
 public class RobotSwitches {
 
-    private static boolean[] switchValues = new boolean[10];
+    private static boolean[] switchValues = new boolean[0];
     
-    private static boolean[] switchAlternated = new boolean[10];
-
+    private static boolean[] switchAlternated = new boolean[0];
+    
     /**
-     * Static switches that can be turned on or off 
-     */
-    public enum Switches
+    * Creates a new switch.
+    * 
+    * @return A newly created switch.
+    */
+    public static int newSwitch()
     {
-        switch0
-        , switch1
-        , switch2
-        , switch3
-        , switch4
-        , switch5
-        , switch6
-        , switch7
-        , switch8
-        , switch9;
-
-        private static int usedSwitches = 0;
-
-        /**
-         * Creates a new switch.
-         * 
-         * @return A newly created switch.
-         */
-        public static Switches newSwitch()
+        int oldSwitchAmount = switchValues.length;
+        boolean[] tempSwitches = new boolean[oldSwitchAmount + 1];
+        boolean[] tempAlternated = new boolean[oldSwitchAmount + 1];
+        for (int i = 0; i < oldSwitchAmount; i++)
         {
-            usedSwitches++;
-            return Switches.values()[usedSwitches - 1];
+            tempSwitches[i] = switchValues[i];
+            tempAlternated[i] = switchAlternated[i];
         }
+        tempSwitches[oldSwitchAmount] = true;
+        tempSwitches[oldSwitchAmount] = false;
+        switchValues = tempSwitches;
+        switchAlternated = tempAlternated;
+        return oldSwitchAmount;
     }
 
     /**
@@ -54,6 +46,7 @@ public class RobotSwitches {
         for (int i = 0; i < switchValues.length; i++)
         {
             switchValues[i] = true;
+            switchAlternated[i] = false;
         }
 
         System.out.println("All switches are now on.");
@@ -64,9 +57,9 @@ public class RobotSwitches {
      * 
      * @param yourSwitch The switch you want to turn on.
      */
-    public static void switchOn(Switches yourSwitch)
+    public static void switchOn(int yourSwitch)
     {
-        switchValues[yourSwitch.ordinal()] = true;
+        switchValues[yourSwitch] = true;
         //System.out.println(yourSwitch + " is now on.");
     }
 
@@ -75,9 +68,9 @@ public class RobotSwitches {
      * 
      * @param yourSwitch The switch you want to turn off.
      */
-    public static void switchOff(Switches yourSwitch)
+    public static void switchOff(int yourSwitch)
     {
-        switchValues[yourSwitch.ordinal()] = false;
+        switchValues[yourSwitch] = false;
         //System.out.println(yourSwitch + " is now off.");
     }
     /**
@@ -85,9 +78,9 @@ public class RobotSwitches {
      * 
      * @param yourSwitch The switch you want to alternate.
      */
-    public static void alternateSwitch(Switches yourSwitch)
+    public static void alternateSwitch(int yourSwitch)
     {
-        boolean switchValue = switchValues[yourSwitch.ordinal()];
+        boolean switchValue = switchValues[yourSwitch];
         if (switchValue == false)
         {
             //System.out.println(yourSwitch + " is now on.");
@@ -97,7 +90,7 @@ public class RobotSwitches {
             switchValue = false;
         }
 
-        switchValues[yourSwitch.ordinal()] = switchValue;
+        switchValues[yourSwitch] = switchValue;
     }
 
     /**
@@ -107,10 +100,10 @@ public class RobotSwitches {
      * @param input The changing value that will be compared.
      * @param compareValue The final value that the 'input' is compared to.
      */
-    public static boolean alternateSwitch(Switches yourSwitch, Boolean input, Boolean compareValue)
+    public static boolean alternateSwitch(int yourSwitch, Boolean input, Boolean compareValue)
     {
         boolean output = false;
-        boolean alternated = switchAlternated[yourSwitch.ordinal()];
+        boolean alternated = switchAlternated[yourSwitch];
         if (input != compareValue)
         {
             alternated = false;
@@ -119,7 +112,7 @@ public class RobotSwitches {
             alternated = true;
             output = true;
         }
-        switchAlternated[yourSwitch.ordinal()] = alternated;
+        switchAlternated[yourSwitch] = alternated;
         return output;
     }
 
@@ -128,8 +121,8 @@ public class RobotSwitches {
      * 
      * @param yourSwitch The switch you want to check.
      */
-    public static boolean checkSwitch(Switches yourSwitch)
+    public static boolean checkSwitch(int yourSwitch)
     {
-        return switchValues[yourSwitch.ordinal()];
+        return switchValues[yourSwitch];
     }
 }

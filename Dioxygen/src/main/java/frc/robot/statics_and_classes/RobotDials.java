@@ -16,44 +16,38 @@ import frc.robot.statics_and_classes.classes.Dial;
  */
 public class RobotDials {
 
-    private static Dial[] dialValues = new Dial[10];
+    private static Dial[] dialValues = new Dial[0];
     
-    private static boolean[] dialTurned = new boolean[10];
-
-    public enum Dials
+    private static boolean[] dialTurned = new boolean[0];
+    
+    /**
+     * Creates a new dial.
+     * 
+     * @return A newly created dial.
+     */
+    public static int newDial(int maxValue)
     {
-        dial0
-        , diall
-        , dial2
-        , dial3
-        , dial4
-        , dial5
-        , dial6
-        , dial7
-        , dial8
-        , dial9;
-
-        public static int usedDials = 0;
-
-        /**
-         * Creates a new dial.
-         * 
-         * @return A newly created dial.
-         */
-        public static Dials newDial(int maxValue)
+        int oldDialAmount = dialValues.length;
+        Dial[] tempDials = new Dial[oldDialAmount];
+        boolean[] tempTurned = new boolean[oldDialAmount];
+        for (int i = 0; i < oldDialAmount; i++)
         {
-            dialValues[usedDials] = new Dial(maxValue);
-            usedDials++;
-            return Dials.values()[usedDials - 1];
+            tempDials[i] = dialValues[i];
+            tempTurned[i] = dialTurned[i];
         }
+        tempDials[oldDialAmount] = new Dial(maxValue);
+        tempTurned[oldDialAmount] = false;
+        dialValues = tempDials;
+        dialTurned = tempTurned;
+        return oldDialAmount;
     }
 
     /**
      * Sets the value of a dial to zero.
      */
-    public static void resetDial(Dials yourDial)
+    public static void resetDial(int yourDial)
     {
-        dialValues[yourDial.ordinal()].currentvalue = 0;
+        dialValues[yourDial].currentvalue = 0;
         checkNewValue(yourDial);
     }
 
@@ -62,7 +56,7 @@ public class RobotDials {
      */
     public static void resetAllDials()
     {
-        for (int i = 0; i < Dials.usedDials; i++)
+        for (int i = 0; i < dialValues.length; i++)
         {
             dialValues[i].currentvalue = 0;
         }
@@ -75,9 +69,9 @@ public class RobotDials {
      * 
      * @param yourDial The dial you want to increment.
      */
-    public static void incrementDial(Dials yourDial)
+    public static void incrementDial(int yourDial)
     {
-        dialValues[yourDial.ordinal()].currentvalue++;
+        dialValues[yourDial].currentvalue++;
         checkNewValue(yourDial);
     }
 
@@ -86,15 +80,15 @@ public class RobotDials {
      * 
      * @param yourDial The dial you want to decrement.
      */
-    public static void decrementDial(Dials yourDial)
+    public static void decrementDial(int yourDial)
     {
-        dialValues[yourDial.ordinal()].currentvalue--;
+        dialValues[yourDial].currentvalue--;
         checkNewValue(yourDial);
     }
 
-    public static boolean moveDialAndWait(Dials yourDial, boolean input, Boolean compareValue, Consumer<Dials> moveDialType)
+    public static boolean moveDialAndWait(int yourDial, boolean input, Boolean compareValue, Consumer<Integer> moveDialType)
     {
-        boolean turned = dialTurned[yourDial.ordinal()];
+        boolean turned = dialTurned[yourDial];
         boolean output = false;
         if (input != compareValue)
         {
@@ -104,13 +98,13 @@ public class RobotDials {
             turned = true;
             output = true;
         }
-        dialTurned[yourDial.ordinal()] = turned;
+        dialTurned[yourDial] = turned;
         return output;
     }
 
-    public static int getDial(Dials yourDial)
+    public static int getDial(int yourDial)
     {
-        return dialValues[yourDial.ordinal()].currentvalue;
+        return dialValues[yourDial].currentvalue;
     }
 
     /**
@@ -119,9 +113,9 @@ public class RobotDials {
      * @param yourDial The dial you want to change.
      * @param dialValue The amount you want to set the dial to.
      */
-    public static void setDial(Dials yourDial, int dialValue)
+    public static void setDial(int yourDial, int dialValue)
     {
-        dialValues[yourDial.ordinal()].currentvalue = dialValue;
+        dialValues[yourDial].currentvalue = dialValue;
         checkNewValue(yourDial);
     }
 
@@ -131,15 +125,15 @@ public class RobotDials {
      * @param yourDial The dial you want to "turn".
      * @param changeAmount The amount you want to "turn" the dial.
      */
-    public static void turnDial(Dials yourDial, int changeAmount)
+    public static void turnDial(int yourDial, int changeAmount)
     {
-        dialValues[yourDial.ordinal()].currentvalue += changeAmount;
+        dialValues[yourDial].currentvalue += changeAmount;
         checkNewValue(yourDial);
     }
 
-    private static void checkNewValue(Dials yourDial)
+    private static void checkNewValue(int yourDial)
     {
-        dialValues[yourDial.ordinal()].currentvalue = Equations.wrap(dialValues[yourDial.ordinal()].currentvalue, 0, dialValues[yourDial.ordinal()].maxValue);
+        dialValues[yourDial].currentvalue = Equations.wrap(dialValues[yourDial].currentvalue, 0, dialValues[yourDial].maxValue);
         //System.out.println("Dial '" + yourDial + "' is now set to '" + dialValues[yourDial.ordinal()].currentvalue + "'.");
     }
 }
