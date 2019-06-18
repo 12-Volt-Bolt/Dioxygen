@@ -55,9 +55,9 @@ public class Robot extends TimedRobot {
 
   // Switches and Dials
   public static final int ballLauncherSafety = RobotSwitches.newSwitch();
-  public static final int doMecanumDrive = RobotSwitches.newSwitch();
   public static final int releaseBall = RobotSwitches.newSwitch();
-  public static final int compressorMode = RobotDials.newDial(2);
+  public static final int driveMode = RobotDials.newDial(2);
+  public static final int compressorMode = RobotDials.newDial(3);
 
   // Commands
   public static Command basicTankDrive = new BasicTankDrive();
@@ -187,7 +187,7 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
 
     RobotSwitches.alternateSwitch(ballLauncherSafety, driveController.getStartButton(), true);
-    RobotSwitches.alternateSwitch(doMecanumDrive, driveController.getBackButton(), true);
+    RobotSwitches.alternateSwitch(driveMode, driveController.getBackButton(), true);
   }
 
   /**

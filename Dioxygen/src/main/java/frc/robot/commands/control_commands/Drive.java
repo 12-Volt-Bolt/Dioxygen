@@ -9,13 +9,13 @@ package frc.robot.commands.control_commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotSwitches;
+import frc.robot.statics_and_classes.RobotDials;;
 
 public class Drive extends Command {
 
   private static Command basicMecDrive = Robot.basicMecDrive;
   private static Command basicTankDrive = Robot.basicTankDrive;
-  private static final int doMecanumDrive = Robot.doMecanumDrive;
+  private static final int driveMode = Robot.driveMode;
 
   boolean doMechanum = false;
 
@@ -33,18 +33,24 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    boolean tempDoMecanum = RobotSwitches.checkSwitch(doMecanumDrive);
-    if (tempDoMecanum == false && doMechanum == false)
-    {
-      doMechanum = true;
-      basicMecDrive.cancel();
-      basicTankDrive.start();
-      System.out.println("Switching to tank mode.");
-    } else if (tempDoMecanum == true && doMechanum == true){
-      doMechanum = false;
-      basicTankDrive.cancel();
-      basicMecDrive.start();
-      System.out.println("Switching to Mecanum mode.");
+    switch (RobotDials.getDial(driveMode)) {
+      case 0:
+        doMechanum = true;
+        basicMecDrive.cancel();
+        basicTankDrive.start();
+        System.out.println("Switching to tank mode.");
+        break;
+      
+      case 1:
+        doMechanum = false;
+        basicTankDrive.cancel();
+        basicMecDrive.start();
+        System.out.println("Switching to Mecanum mode.");
+        break;
+    
+      default:
+        System.out.println("Switch 'driveMode' out of bounds!");
+        break;
     }
   }
 

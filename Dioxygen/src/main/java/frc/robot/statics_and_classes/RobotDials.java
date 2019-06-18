@@ -23,9 +23,11 @@ public class RobotDials {
     /**
      * Creates a new dial.
      * 
+     * @param dialPositions The amount of positions the dial contains. (2 positions minimum)
+     * 
      * @return A newly created dial.
-     */
-    public static int newDial(int maxValue)
+     */ 
+    public static int newDial(int dialPositions)
     {
         int oldDialAmount = dialValues.length;
         Dial[] tempDials = new Dial[oldDialAmount];
@@ -35,7 +37,7 @@ public class RobotDials {
             tempDials[i] = dialValues[i];
             tempTurned[i] = dialTurned[i];
         }
-        tempDials[oldDialAmount] = new Dial(maxValue);
+        tempDials[oldDialAmount] = new Dial(dialPositions - 1);
         tempTurned[oldDialAmount] = false;
         dialValues = tempDials;
         dialTurned = tempTurned;
