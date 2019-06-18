@@ -7,45 +7,38 @@
 
 package frc.robot.commands.control_commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.pnumatics.BallReleaseSolenoids;
 import frc.robot.statics_and_classes.RobotSwitches;
 import frc.robot.statics_and_classes.RobotSwitches.Switches;
 
-public class Drive extends Command {
+public class BallRelease extends Command {
 
-  private static Command basicMecDrive = Robot.basicMecDrive;
-  private static Command basicTankDrive = Robot.basicTankDrive;
-  private static Switches doMecanumDrive = Robot.doMecanumDrive;
+  private static XboxController driveController = Robot.driveController;
+  private static Switches releaseBall = Robot.releaseBall;
 
-  boolean doMechanum = false;
+  private static BallReleaseSolenoids ballReleaseSolenoids = new BallReleaseSolenoids();
 
-  public Drive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  private static boolean doReleaseBall = false;
+
+  public BallRelease() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    basicTankDrive.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    boolean tempDoMecanum = RobotSwitches.checkSwitch(doMecanumDrive);
-    if (tempDoMecanum == false && doMechanum == false)
+    doReleaseBall = RobotSwitches.alternateSwitch(releaseBall, driveController.getAButton(), true);
+    if (doReleaseBall == true)
     {
-      doMechanum = true;
-      basicMecDrive.cancel();
-      basicTankDrive.start();
-      System.out.println("Switching to tank mode.");
-    } else if (tempDoMecanum == true && doMechanum == true){
-      doMechanum = false;
-      basicTankDrive.cancel();
-      basicMecDrive.start();
-      System.out.println("Switching to Mecanum mode.");
+      ballReleaseSolenoids.start();
+      doReleaseBall = false;
     }
   }
 

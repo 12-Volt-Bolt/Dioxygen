@@ -139,10 +139,10 @@ public class MecanumDrive extends Subsystem {
     input.rotate(-gyroAngle);
 
     double[] wheelSpeeds = new double[4];
-    wheelSpeeds[DriveMotors.frontLeft.ordinal()] = input.x + input.y + zRotation;
-    wheelSpeeds[DriveMotors.frontRight.ordinal()] = -input.x + input.y - zRotation;
-    wheelSpeeds[DriveMotors.rearLeft.ordinal()] = -input.x + input.y + zRotation;
-    wheelSpeeds[DriveMotors.rearRight.ordinal()] = input.x + input.y - zRotation;
+    wheelSpeeds[DriveMotors.frontLeft.ordinal()] = -input.x + input.y + zRotation;
+    wheelSpeeds[DriveMotors.frontRight.ordinal()] = input.x + input.y - zRotation;
+    wheelSpeeds[DriveMotors.rearLeft.ordinal()] = input.x + input.y + zRotation;
+    wheelSpeeds[DriveMotors.rearRight.ordinal()] = -input.x + input.y - zRotation;
 
     Equations.normalize(wheelSpeeds);
 

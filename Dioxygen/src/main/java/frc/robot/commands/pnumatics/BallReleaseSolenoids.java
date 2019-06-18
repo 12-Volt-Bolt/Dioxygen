@@ -5,54 +5,60 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.control_commands;
+package frc.robot.commands.pnumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.RobotSwitches.Switches;
+import frc.robot.RobotMap.Pnumatics;
+import frc.robot.subsystems.ball_launcher.SolenoidControl;
 
-public class Drive extends Command {
+public class BallReleaseSolenoids extends Command {
 
-  private static Command basicMecDrive = Robot.basicMecDrive;
-  private static Command basicTankDrive = Robot.basicTankDrive;
-  private static Switches doMecanumDrive = Robot.doMecanumDrive;
+  private static SolenoidControl solenoids = Robot.solenoids;
 
-  boolean doMechanum = false;
-
-  public Drive() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public BallReleaseSolenoids() {
+    requires(solenoids);
   }
+
+  private static double endTime = 0;
+  private static boolean end = false;
+  private static boolean newRelease = true;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    basicTankDrive.start();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    boolean tempDoMecanum = RobotSwitches.checkSwitch(doMecanumDrive);
-    if (tempDoMecanum == false && doMechanum == false)
+    if (System.currentTimeMillis() > endTime && endTime != 0)
     {
-      doMechanum = true;
-      basicMecDrive.cancel();
-      basicTankDrive.start();
-      System.out.println("Switching to tank mode.");
-    } else if (tempDoMecanum == true && doMechanum == true){
-      doMechanum = false;
-      basicTankDrive.cancel();
-      basicMecDrive.start();
-      System.out.println("Switching to Mecanum mode.");
+      SolenoidControl.solenoidOn(Pnumatics.topSolenoid);
+      SolenoidControl.solenoidOn(Pnumatics.bottomSolenoid);
+
+      end = true;
+      newRelease = true;
+      endTime = 0;
+    } else if (newRelease == true) {
+      newRelease = false;
+      endTime = System.currentTimeMillis() + 1000;
+      SolenoidControl.solenoidOff(Pnumatics.bottomSolenoid);
+      SolenoidControl.solenoidOff(Pnumatics.topSolenoid);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    boolean output = false;
+    if (end == true)
+    {
+      end = false;
+      output = true;
+    }
+    return output;
   }
 
   // Called once after isFinished returns true
