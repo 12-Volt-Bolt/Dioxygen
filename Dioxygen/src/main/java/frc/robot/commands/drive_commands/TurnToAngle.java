@@ -5,45 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.driveCommands;
+package frc.robot.commands.drive_commands;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.MecanumDrive;
+import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 
-public class GyroMecDrive extends Command {
-
-  private Drivebase drivebase = Robot.drivebase;
+public class TurnToAngle extends Command {
+  private double angleToTurnTo;
   
-  private XboxController driveCon = Robot.driveController;
-  private AHRS NavXGyro = Robot.navXGyro;
+  private AHRS gyro = Robot.navXGyro;
+  
+  private Drivebase drivebase = Robot.drivebase;
 
-  public GyroMecDrive() {
+  public TurnToAngle(double angle) {
     requires(drivebase);
+
+    angleToTurnTo = angle;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Drivebase.setKey(driveSubsystemKeys.mecanumSub);
+    Drivebase.setKey(driveSubsystemKeys.tankSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDrive.driveCartesian(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
+    TankDrive.arcadeDrive(0, MecanumDrive.turnSpeed(gyro, false, angleToTurnTo));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    Boolean output = false;
+    if ((int) (gyro.getAngle() / 3) == (int) (angleToTurnTo / 3))
+    {
+      output = true;
+    }
+    return output;
   }
 
   // Called once after isFinished returns true

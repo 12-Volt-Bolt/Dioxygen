@@ -5,35 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.driveCommands;
+package frc.robot.commands.drive_commands;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.TankDrive;
+import frc.robot.subsystems.MecanumDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 
-public class BasicTankDrive extends Command {
+public class GyroMecDrive extends Command {
 
   private Drivebase drivebase = Robot.drivebase;
+  
   private XboxController driveCon = Robot.driveController;
+  private AHRS NavXGyro = Robot.navXGyro;
 
-  public BasicTankDrive() {
+  public GyroMecDrive() {
     requires(drivebase);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Drivebase.setKey(driveSubsystemKeys.tankSub);
+    Drivebase.setKey(driveSubsystemKeys.mecanumSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.arcadeDrive(driveCon.getY(Hand.kLeft), -driveCon.getX(Hand.kRight));
+    MecanumDrive.driveCartesian(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -5,51 +5,42 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.driveCommands;
+package frc.robot.commands.drive_commands;
 
-import com.kauailabs.navx.frc.AHRS;
-
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.MecanumDrive;
-import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 
-public class TurnToAngle extends Command {
-  private double angleToTurnTo;
-  
-  private AHRS gyro = Robot.navXGyro;
+public class BasicMecDrive extends Command {
   
   private Drivebase drivebase = Robot.drivebase;
 
-  public TurnToAngle(double angle) {
+  public BasicMecDrive() {
     requires(drivebase);
-
-    angleToTurnTo = angle;
   }
+  
+  private XboxController driveCon = Robot.driveController;
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Drivebase.setKey(driveSubsystemKeys.tankSub);
+    Drivebase.setKey(driveSubsystemKeys.mecanumSub);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.arcadeDrive(0, MecanumDrive.turnSpeed(gyro, false, angleToTurnTo));
+    MecanumDrive.driveCartesian(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kLeft), -driveCon.getX(Hand.kRight));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    Boolean output = false;
-    if ((int) (gyro.getAngle() / 3) == (int) (angleToTurnTo / 3))
-    {
-      output = true;
-    }
-    return output;
+    return false;
   }
 
   // Called once after isFinished returns true

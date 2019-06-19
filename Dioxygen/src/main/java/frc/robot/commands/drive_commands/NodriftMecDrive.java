@@ -5,7 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.driveCommands;
+package frc.robot.commands.drive_commands;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -15,15 +17,16 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.MecanumDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 
-public class BasicMecDrive extends Command {
+public class NodriftMecDrive extends Command {
   
   private Drivebase drivebase = Robot.drivebase;
 
-  public BasicMecDrive() {
+  public NodriftMecDrive() {
     requires(drivebase);
   }
   
   private XboxController driveCon = Robot.driveController;
+  private AHRS NavXGyro = Robot.navXGyro;
 
   // Called just before this Command runs the first time
   @Override
@@ -34,7 +37,7 @@ public class BasicMecDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDrive.driveCartesian(driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kLeft), -driveCon.getX(Hand.kRight));
+    MecanumDrive.noDriftDrive(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro);
   }
 
   // Make this return true when this Command no longer needs to run execute()
