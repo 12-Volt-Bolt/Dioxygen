@@ -30,8 +30,8 @@ public class RobotDials {
     public static int newDial(int dialPositions)
     {
         int oldDialAmount = dialValues.length;
-        Dial[] tempDials = new Dial[oldDialAmount];
-        boolean[] tempTurned = new boolean[oldDialAmount];
+        Dial[] tempDials = new Dial[oldDialAmount + 1];
+        boolean[] tempTurned = new boolean[oldDialAmount + 1];
         for (int i = 0; i < oldDialAmount; i++)
         {
             tempDials[i] = dialValues[i];

@@ -17,7 +17,7 @@ public class Drive extends Command {
   private static Command basicTankDrive = Robot.basicTankDrive;
   private static final int driveMode = Robot.driveMode;
 
-  boolean doMechanum = false;
+  int pastMode = 0;
 
   public Drive() {
     // Use requires() here to declare subsystem dependencies
@@ -33,25 +33,28 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    switch (RobotDials.getDial(driveMode)) {
-      case 0:
-        doMechanum = true;
-        basicMecDrive.cancel();
-        basicTankDrive.start();
-        System.out.println("Switching to tank mode.");
-        break;
+    int mode = RobotDials.getDial(driveMode);
+    if (pastMode != mode)
+    {
+      switch (mode) {
+        case 0:
+          basicMecDrive.cancel();
+          basicTankDrive.start();
+          System.out.println("Switching to tank mode.");
+          break;
       
-      case 1:
-        doMechanum = false;
-        basicTankDrive.cancel();
-        basicMecDrive.start();
-        System.out.println("Switching to Mecanum mode.");
-        break;
+        case 1:
+          basicTankDrive.cancel();
+          basicMecDrive.start();
+          System.out.println("Switching to Mecanum mode.");
+          break;
     
-      default:
-        System.out.println("Switch 'driveMode' out of bounds!");
-        break;
+        default:
+          System.out.println("Switch 'driveMode' out of bounds!");
+          break;
+      }
     }
+    pastMode = mode;
   }
 
   // Make this return true when this Command no longer needs to run execute()
