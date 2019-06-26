@@ -7,18 +7,21 @@
 
 package frc.robot.commands.control_commands;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotSwitches;
+import frc.robot.statics_and_classes.RobotDials;;
 
-public class BallLauncher extends Command {
+public class Drive extends Command {
 
-  private static Command ballLauncherSpinup = Robot.ballLauncherSpinup;
-  private static final int ballLauncherSafety = Robot.ballLauncherSafety;
+  private static XboxController driveController = Robot.driveController;
+  private static Command basicMecDrive = Robot.basicMecDrive;
+  private static Command basicTankDrive = Robot.basicTankDrive;
+  private static final int driveMode = Robot.driveMode;
 
-  private static boolean launcherOn = false;
+  int pastMode = 0;
 
-  public BallLauncher() {
+  public Drive() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -26,22 +29,36 @@ public class BallLauncher extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    basicTankDrive.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    boolean tempLauncherSafety = RobotSwitches.checkSwitch(ballLauncherSafety);
-    if (tempLauncherSafety == false && launcherOn == false)
+    RobotDials.moveDialAndWait(driveMode, driveController.getBackButton(), true, RobotDials::incrementDial);
+    
+    int mode = RobotDials.getDial(driveMode);
+    if (pastMode != mode)
     {
-      launcherOn = true;
-      ballLauncherSpinup.start();
-      System.out.println("Starting ball launcher command");
-    } else if (tempLauncherSafety == true && launcherOn == true){
-      launcherOn = false;
-      ballLauncherSpinup.cancel();
-      System.out.println("Stopping ball launcher command");
+      switch (mode) {
+        case 0:
+          basicMecDrive.cancel();
+          basicTankDrive.start();
+          System.out.println("Switching to tank mode.");
+          break;
+      
+        case 1:
+          basicTankDrive.cancel();
+          basicMecDrive.start();
+          System.out.println("Switching to Mecanum mode.");
+          break;
+    
+        default:
+          System.out.println("Switch 'driveMode' out of bounds!");
+          break;
+      }
     }
+    pastMode = mode;
   }
 
   // Make this return true when this Command no longer needs to run execute()

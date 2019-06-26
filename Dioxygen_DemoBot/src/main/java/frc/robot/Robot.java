@@ -64,7 +64,6 @@ public class Robot extends TimedRobot {
   public static Command basicMecDrive = new BasicMecDrive();
   public static Command ballLauncherSpinup = new LauncherSpinup();
   public static Command ballRelease = new BallRelease();
-  //public static Command compressorOnTillDone = new CompressorOnTillDone(CompressorControl.compressor1);
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -186,8 +185,6 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
 
-    RobotSwitches.alternateSwitch(ballLauncherSafety, driveController.getStartButton(), true);
-    RobotSwitches.alternateSwitch(driveMode, driveController.getBackButton(), true);
   }
 
   /**
