@@ -13,17 +13,21 @@ import frc.robot.Robot;
 import frc.robot.statics_and_classes.classes.Dial;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 
-public class CompressorOnTillDone extends Command {
+public class CompressorOnForTime extends Command {
 
   private static CompressorControl compressorControl = Robot.compressorControl;
   private static Dial compressorMode = Robot.compressorMode;
 
   private static Compressor compressor;
   private static boolean end = false;
+  private static Long endTime;
+  private static long runTime;
 
-  public CompressorOnTillDone(Compressor newCompressor) {
+  public CompressorOnForTime(Compressor newCompressor, long timeInSeconds) {
     requires(compressorControl);
     compressor = newCompressor;
+    runTime = timeInSeconds;
+    endTime = System.currentTimeMillis() + (timeInSeconds * 1000);
     System.out.println(compressor);
   }
 
@@ -31,13 +35,13 @@ public class CompressorOnTillDone extends Command {
   @Override
   protected void initialize() {
 	  CompressorControl.compressorOn(CompressorControl.compressor1);
-    System.out.println("Compressor '" + CompressorControl.compressor1.getName() + "' is now on until the tank finishes filling.");
+    System.out.println("Compressor '" + CompressorControl.compressor1.getName() + "' will remain on for " + runTime + " seconds.");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (CompressorControl.compressor1.enabled() == false)
+    if (System.currentTimeMillis() > endTime)
     {
       compressorMode.set(0);
       CompressorControl.compressorOff(CompressorControl.compressor1);
@@ -60,6 +64,6 @@ public class CompressorOnTillDone extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("'CompressorOnTillDone' canceled, the compressor will remain on until turned off.");
+    System.out.println("'CompressorOnForTime' canceled, the compressor will remain on until turned off.");
   }
 }

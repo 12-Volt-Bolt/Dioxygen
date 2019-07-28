@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.pnumatics.CompressorOnTillDone;
+import frc.robot.commands.pnumatics.CompressorOnForTime;
 import frc.robot.statics_and_classes.classes.Dial;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 
@@ -27,11 +27,12 @@ public class CompressorController extends Command {
     compressor = newCompressor;
   }
   
-  private static Command compressorOnTillDone = new CompressorOnTillDone(compressor); //Robot.compressorOnTillDone;
+  private static Command compressorOnTillDone = new CompressorOnForTime(compressor, 30);
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    CompressorControl.compressorOff(compressor);
   }
 
   // Called repeatedly when this Command is scheduled to run
