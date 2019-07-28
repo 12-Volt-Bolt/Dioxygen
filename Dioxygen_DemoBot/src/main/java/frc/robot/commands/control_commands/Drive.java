@@ -10,14 +10,14 @@ package frc.robot.commands.control_commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotDials;;
+import frc.robot.statics_and_classes.classes.Dial;
 
 public class Drive extends Command {
 
   private static XboxController driveController = Robot.driveController;
   private static Command basicMecDrive = Robot.basicMecDrive;
   private static Command basicTankDrive = Robot.basicTankDrive;
-  private static final int driveMode = Robot.driveMode;
+  private static final Dial driveMode = Robot.driveMode;
 
   int pastMode = 0;
 
@@ -35,9 +35,9 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotDials.moveDialAndWait(driveMode, driveController.getBackButton(), true, RobotDials::incrementDial);
+    driveMode.incrementWhenTrue(driveController.getBackButton());
     
-    int mode = RobotDials.getDial(driveMode);
+    int mode = driveMode.value;
     if (pastMode != mode)
     {
       switch (mode) {

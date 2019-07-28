@@ -11,16 +11,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.pnumatics.BallReleaseSolenoids;
-import frc.robot.statics_and_classes.RobotSwitches;
+import frc.robot.statics_and_classes.classes.Switch;
 
 public class BallRelease extends Command {
 
   private static XboxController driveController = Robot.driveController;
-  private static final int releaseBall = Robot.releaseBall;
+  private static final Switch releaseBall = Robot.releaseBall;
 
   private static BallReleaseSolenoids ballReleaseSolenoids = new BallReleaseSolenoids();
-
-  private static boolean doReleaseBall = false;
 
   public BallRelease() {
   }
@@ -33,11 +31,9 @@ public class BallRelease extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    doReleaseBall = RobotSwitches.alternateSwitch(releaseBall, driveController.getAButton(), true);
-    if (doReleaseBall == true)
+    if (releaseBall.flipOnTrue(driveController.getAButton()))
     {
       ballReleaseSolenoids.start();
-      doReleaseBall = false;
     }
   }
 
