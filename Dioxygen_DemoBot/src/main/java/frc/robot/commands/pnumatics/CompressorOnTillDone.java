@@ -10,12 +10,13 @@ package frc.robot.commands.pnumatics;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotDials;
+import frc.robot.statics_and_classes.classes.Dial;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 
 public class CompressorOnTillDone extends Command {
 
   private static CompressorControl compressorControl = Robot.compressorControl;
+  private static Dial compressorMode = Robot.compressorMode;
 
   private static Compressor compressor;
   private static boolean end = false;
@@ -38,7 +39,7 @@ public class CompressorOnTillDone extends Command {
   protected void execute() {
     if (CompressorControl.compressor1.enabled() == false)
     {
-      RobotDials.setDial(Robot.compressorMode, 0);
+      compressorMode.set(0);
       CompressorControl.compressorOff(CompressorControl.compressor1);
       end = true;
     }

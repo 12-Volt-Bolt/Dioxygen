@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.pnumatics.CompressorOnTillDone;
+import frc.robot.statics_and_classes.classes.Dial;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
-import frc.robot.statics_and_classes.RobotDials;
 
 public class CompressorController extends Command {
 
@@ -21,8 +21,7 @@ public class CompressorController extends Command {
 
   private static Compressor compressor;
 
-  private static final int compressorMode = Robot.compressorMode;
-  private static boolean doCompressor = false;
+  private static final Dial compressorMode = Robot.compressorMode;
 
   public CompressorController(Compressor newCompressor) {
     compressor = newCompressor;
@@ -38,11 +37,9 @@ public class CompressorController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    doCompressor = RobotDials.moveDialAndWait(compressorMode, driveController.getXButton(), true, RobotDials::incrementDial);
-
-    if (doCompressor == true)
+    if (compressorMode.incrementWhenTrue(driveController.getXButton()))
     {
-      switch (RobotDials.getDial(compressorMode)) {
+      switch (compressorMode.value) {
         case 0:
           compressorOnTillDone.cancel();
           CompressorControl.compressorOff(compressor);

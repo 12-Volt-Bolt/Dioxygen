@@ -10,13 +10,13 @@ package frc.robot.commands.control_commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.statics_and_classes.RobotSwitches;
+import frc.robot.statics_and_classes.classes.Switch;
 
 public class BallLauncher extends Command {
 
   private static XboxController driveController = Robot.driveController;
   private static Command ballLauncherSpinup = Robot.ballLauncherSpinup;
-  private static final int ballLauncherSafety = Robot.ballLauncherSafety;
+  private static Switch ballLauncherSafety = Robot.ballLauncherSafety;
 
   private static boolean launcherOn = false;
 
@@ -33,9 +33,9 @@ public class BallLauncher extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    RobotSwitches.alternateSwitch(ballLauncherSafety, driveController.getStartButton(), true);
+    ballLauncherSafety.flipOnTrue(driveController.getStartButton());
 
-    boolean tempLauncherSafety = RobotSwitches.checkSwitch(ballLauncherSafety);
+    boolean tempLauncherSafety = ballLauncherSafety.state;
     if (tempLauncherSafety == false && launcherOn == false)
     {
       launcherOn = true;

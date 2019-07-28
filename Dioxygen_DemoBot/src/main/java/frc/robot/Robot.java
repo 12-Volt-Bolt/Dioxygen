@@ -27,9 +27,7 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
 import frc.robot.subsystems.ball_launcher.SolenoidControl;
-import frc.robot.statics_and_classes.RobotDials;
-import frc.robot.statics_and_classes.RobotSwitches;
-import frc.robot.statics_and_classes.UniversalController;
+import frc.robot.statics_and_classes.classes.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -51,13 +49,12 @@ public class Robot extends TimedRobot {
 
   // Controllers
   public static final XboxController driveController = new XboxController(0);
-  public static final UniversalController testController = new UniversalController(0);
 
   // Switches and Dials
-  public static final int ballLauncherSafety = RobotSwitches.newSwitch();
-  public static final int releaseBall = RobotSwitches.newSwitch();
-  public static final int driveMode = RobotDials.newDial(2);
-  public static final int compressorMode = RobotDials.newDial(3);
+  public static Switch ballLauncherSafety = new Switch();
+  public static Switch releaseBall = new Switch();
+  public static Dial driveMode = new Dial(2);
+  public static Dial compressorMode = new Dial(3);
 
   // Commands
   public static Command basicTankDrive = new BasicTankDrive();
@@ -169,8 +166,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotSwitches.allSwitchesOn();
-    RobotDials.resetAllDials();
 
     drive.start();
     ballLauncher.start();
