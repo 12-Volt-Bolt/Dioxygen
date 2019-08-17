@@ -24,11 +24,19 @@ public class CompressorControl extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  /**
+   * Turns on a compressor.
+   * @param compressor The compressor that will be turned on.
+   */
   public static void compressorOn(Compressor compressor)
   {
     compressor.setClosedLoopControl(true);
   }
 
+  /**
+   * Turns off a compressor.
+   * @param compressor The compressor that will be turned off.
+   */
   public static void compressorOff(Compressor compressor)
   {
     compressor.setClosedLoopControl(false);

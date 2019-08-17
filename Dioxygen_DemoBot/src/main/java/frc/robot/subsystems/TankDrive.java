@@ -30,8 +30,8 @@ public class TankDrive extends Subsystem {
    * @param zRotation The robot's rotation rate around the Z axis [-1.0..1.0]. Clockwise is
    *                  positive.
    */
-  public static void arcadeDrive(double xSpeed, double zRotation) {
-    arcadeDrive(xSpeed, zRotation, true);
+  public static void arcadeDrive(double ySpeed, double zRotation) {
+    arcadeDrive(ySpeed, zRotation, true);
   }
 
   /**

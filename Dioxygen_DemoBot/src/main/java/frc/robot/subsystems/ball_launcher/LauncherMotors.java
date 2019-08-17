@@ -30,12 +30,20 @@ public class LauncherMotors extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  /**
+   * Sets both motors to zero.
+   */
   public static void stopMotors()
   {
     leftMotor.set(ControlMode.PercentOutput, Finals.zero);
     rightMotor.set(ControlMode.PercentOutput, Finals.zero);
   }
 
+  /**
+   * Sets both motors to the set speed. Direction is corrected.
+   * 
+   * @param speed 
+   */
   public static void runMotors(double speed)
   {
     leftMotor.set(ControlMode.PercentOutput, -speed);

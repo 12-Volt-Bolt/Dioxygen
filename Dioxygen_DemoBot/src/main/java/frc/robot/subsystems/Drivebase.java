@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import frc.robot.statics_and_classes.Equations;
@@ -18,6 +17,9 @@ import frc.robot.statics_and_classes.Finals;
 
 public class Drivebase extends Subsystem {
 
+  /**
+   * The availible subsystem keys. Add more for each new subsystem added.
+   */
   public enum driveSubsystemKeys
   {
     mecanumSub
@@ -31,29 +33,45 @@ public class Drivebase extends Subsystem {
   public static WPI_TalonSRX rearLeftMotor = new WPI_TalonSRX(DriveMotors.rearLeft.getID());
   public static WPI_TalonSRX rearRightMotor = new WPI_TalonSRX(DriveMotors.rearRight.getID());
 
-  public static SpeedControllerGroup leftSide = new SpeedControllerGroup(frontLeftMotor, rearLeftMotor);
-  public static SpeedControllerGroup rightSide = new SpeedControllerGroup(frontRightMotor, rearRightMotor);
-
   private static int rightSideInverter = -1;
   
   public void initDefaultCommand() {
   }
   
+  /**
+   * Sets the current value of the key.
+   * 
+   * @param newKey
+   */
   public static void setKey(driveSubsystemKeys newKey)
   {
     currentKey = newKey;
   }
 
+  /**
+   * Sets all motors to speed 0.
+   */
   public static void Stop() {
-    rightSide.set(Finals.zero);
-    leftSide.set(Finals.zero);
+    frontLeftMotor.set(Finals.zero);
+    frontRightMotor.set(Finals.zero);
+    rearLeftMotor.set(Finals.zero);
+    rearRightMotor.set(Finals.zero);
   }
 
+  /**
+   * Reverses the direction of the right side drive motors.
+   */
   public static void flipRightSide()
   {
     rightSideInverter = -rightSideInverter;
   }
 
+  /**
+   * Sets the speeds of the drive motors.
+   * 
+   * @param motorSpeeds Double array of motor speeds. Motor order is determined by robotmap ordinals.
+   * @param subsystemKey The key of the subsystem Drivebase is being called from. If this key and the key set by the Command don't match the motors won't be set.
+   */
   public static void setAllMotors(double[] motorSpeeds, driveSubsystemKeys subsystemKey)
   {
     if(currentKey == subsystemKey)

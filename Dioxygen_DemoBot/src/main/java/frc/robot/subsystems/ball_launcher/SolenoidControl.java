@@ -28,16 +28,31 @@ public class SolenoidControl extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  /**
+   * Turns on a solenoid.
+   * 
+   * @param solenoid
+   */
   public static void solenoidOn(pneumatics solenoid)
   {
     solenoids[solenoid.getID()].set(true);
   }
 
+  /**
+   * Turns off a solenoid.
+   * 
+   * @param solenoid
+   */
   public static void solenoidOff(pneumatics solenoid)
   {
     solenoids[solenoid.getID()].set(false);
   }
 
+  /**
+   * Alternates a solenoid.
+   * 
+   * @param solenoid
+   */
   public static void alternateSolenoid(pneumatics solenoid)
   {
     Solenoid temp = solenoids[solenoid.getID()];
