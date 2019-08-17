@@ -13,11 +13,17 @@ public class Switch {
         state = true;
     }
 
+    /**
+     * Creates a new switch with an assigned initial state.
+     */
     public Switch(boolean initialState)
     {
         state = initialState;
     }
 
+    /**
+     * Alternates the value of the switch.
+     */
     public void flip()
     {
         state = !state;
@@ -43,6 +49,9 @@ public class Switch {
         return output;
     }
 
+    /**
+     * Sets the value of the switch.
+     */
     public void set(boolean newState)
     {
         state = newState;

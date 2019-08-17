@@ -35,12 +35,10 @@ public class Drive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    driveMode.incrementWhenTrue(driveController.getBackButton());
-    
-    int mode = driveMode.value;
-    if (pastMode != mode)
+
+    if (driveMode.incrementWhenTrue(driveController.getBackButton()))
     {
-      switch (mode) {
+      switch (driveMode.value) {
         case 0:
           basicMecDrive.cancel();
           basicTankDrive.start();
@@ -58,7 +56,7 @@ public class Drive extends Command {
           break;
       }
     }
-    pastMode = mode;
+    pastMode = driveMode.value;
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -8,23 +8,35 @@ public class Dial {
     private int max;
     private boolean justTurned = false;
 
+    /**
+     * How many positions the dial has.
+     */
     public Dial(int positions)
     {
         max = positions - 1;
     }
 
+    /**
+     * Increases the value of the dial by 1.
+     */
     public void increment()
     {
         value++;
         wrap();
     }
 
+    /**
+     * Decreases the value of the dial by 1.
+     */
     public void decrement()
     {
         value--;
         wrap();
     }
 
+    /**
+     * Sets the value of the dial.
+     */
     public void set(int newValue)
     {
         value = newValue;
@@ -64,6 +76,9 @@ public class Dial {
         value = Equations.wrap(value, 0, max);
     }
 
+    /**
+     * @return The max value the switch will turn to.
+     */
     public int getMax()
     {
         return max;
