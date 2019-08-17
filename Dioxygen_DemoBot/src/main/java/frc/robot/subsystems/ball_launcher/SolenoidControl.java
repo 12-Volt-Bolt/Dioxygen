@@ -10,15 +10,15 @@ package frc.robot.subsystems.ball_launcher;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-import frc.robot.RobotMap.Pnumatics;
+import frc.robot.RobotMap.pneumatics;
 
 /**
  * Add your docs here.
  */
 public class SolenoidControl extends Subsystem {
   
-  public static Solenoid topSolenoid = new Solenoid(Pnumatics.topSolenoid.getID());
-  public static Solenoid bottomSolenoid = new Solenoid(Pnumatics.bottomSolenoid.getID());
+  public static Solenoid topSolenoid = new Solenoid(pneumatics.topSolenoid.getID());
+  public static Solenoid bottomSolenoid = new Solenoid(pneumatics.bottomSolenoid.getID());
 
   public static Solenoid[] solenoids = new Solenoid[]{ topSolenoid,bottomSolenoid };
 
@@ -28,17 +28,17 @@ public class SolenoidControl extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
-  public static void solenoidOn(Pnumatics solenoid)
+  public static void solenoidOn(pneumatics solenoid)
   {
     solenoids[solenoid.getID()].set(true);
   }
 
-  public static void solenoidOff(Pnumatics solenoid)
+  public static void solenoidOff(pneumatics solenoid)
   {
     solenoids[solenoid.getID()].set(false);
   }
 
-  public static void alternateSolenoid(Pnumatics solenoid)
+  public static void alternateSolenoid(pneumatics solenoid)
   {
     Solenoid temp = solenoids[solenoid.getID()];
     temp.set(!temp.get());

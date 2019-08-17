@@ -5,11 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.pnumatics;
+package frc.robot.commands.pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap.Pnumatics;
+import frc.robot.RobotMap.pneumatics;
 import frc.robot.subsystems.ball_launcher.SolenoidControl;
 
 public class BallReleaseSolenoids extends Command {
@@ -35,8 +35,8 @@ public class BallReleaseSolenoids extends Command {
   protected void execute() {
     if (System.currentTimeMillis() > endTime && endTime != 0)
     {
-      SolenoidControl.solenoidOn(Pnumatics.topSolenoid);
-      SolenoidControl.solenoidOn(Pnumatics.bottomSolenoid);
+      SolenoidControl.solenoidOn(pneumatics.topSolenoid);
+      SolenoidControl.solenoidOn(pneumatics.bottomSolenoid);
 
       end = true;
       newRelease = true;
@@ -44,8 +44,8 @@ public class BallReleaseSolenoids extends Command {
     } else if (newRelease == true) {
       newRelease = false;
       endTime = System.currentTimeMillis() + 1000;
-      SolenoidControl.solenoidOff(Pnumatics.bottomSolenoid);
-      SolenoidControl.solenoidOff(Pnumatics.topSolenoid);
+      SolenoidControl.solenoidOff(pneumatics.bottomSolenoid);
+      SolenoidControl.solenoidOff(pneumatics.topSolenoid);
     }
   }
 

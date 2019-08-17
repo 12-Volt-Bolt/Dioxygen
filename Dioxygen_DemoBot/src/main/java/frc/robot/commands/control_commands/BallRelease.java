@@ -10,7 +10,7 @@ package frc.robot.commands.control_commands;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.pnumatics.BallReleaseSolenoids;
+import frc.robot.commands.pneumatics.BallReleaseSolenoids;
 import frc.robot.statics_and_classes.classes.Switch;
 
 public class BallRelease extends Command {

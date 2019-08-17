@@ -62,22 +62,22 @@ public class RobotMap {
     }
   }
 
-  public enum Pnumatics
+  public enum pneumatics
   {
     compressor       (0)
     , topSolenoid    (0)
     , bottomSolenoid (1);
 
-    int pnumaticID;
+    int pneumaticID;
 
-    Pnumatics(int pnumaticID)
+    pneumatics(int pneumaticID)
     {
-      this.pnumaticID = pnumaticID;
+      this.pneumaticID = pneumaticID;
     }
 
     public int getID()
     {
-      return this.pnumaticID;
+      return this.pneumaticID;
     }
   }
 }

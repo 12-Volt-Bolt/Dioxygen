@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.commands.pnumatics.CompressorOnForTime;
+import frc.robot.commands.pneumatics.CompressorOnForTime;
 import frc.robot.statics_and_classes.classes.Dial;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 

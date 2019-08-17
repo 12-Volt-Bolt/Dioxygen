@@ -9,14 +9,14 @@ package frc.robot.subsystems.ball_launcher;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap.Pnumatics;
+import frc.robot.RobotMap.pneumatics;
 
 /**
  * Add your docs here.
  */
 public class CompressorControl extends Subsystem {
 
-  public static Compressor compressor1 = new Compressor(Pnumatics.compressor.getID());
+  public static Compressor compressor1 = new Compressor(pneumatics.compressor.getID());
 
   @Override
   public void initDefaultCommand() {
