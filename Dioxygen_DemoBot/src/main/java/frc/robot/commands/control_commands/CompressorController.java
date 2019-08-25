@@ -8,16 +8,17 @@
 package frc.robot.commands.control_commands;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.commands.pneumatics.CompressorOnForTime;
 import frc.robot.statics_and_classes.classes.Dial;
+import frc.robot.statics_and_classes.controller.UniversalController;
+import frc.robot.statics_and_classes.controller.controller_profiles.XboxOne;
 import frc.robot.subsystems.ball_launcher.CompressorControl;
 
 public class CompressorController extends Command {
 
-  private static XboxController driveController = Robot.driveController;
+  private static UniversalController driveController = Robot.driveController;
 
   private static Compressor compressor;
 
@@ -38,7 +39,7 @@ public class CompressorController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (compressorMode.incrementWhenTrue(driveController.getXButton()))
+    if (compressorMode.incrementWhenTrue(driveController.getButton(XboxOne.Button.x.getID())))
     {
       switch (compressorMode.value) {
         case 0:

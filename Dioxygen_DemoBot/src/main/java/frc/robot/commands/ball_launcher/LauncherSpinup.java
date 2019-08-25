@@ -7,16 +7,17 @@
 
 package frc.robot.commands.ball_launcher;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.Equations;
 import frc.robot.statics_and_classes.classes.Switch;
+import frc.robot.statics_and_classes.controller.UniversalController;
+import frc.robot.statics_and_classes.controller.controller_profiles.XboxOne;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
 
 public class LauncherSpinup extends Command {
 
-  private static XboxController driveController = Robot.driveController;
+  private static UniversalController driveController = Robot.driveController;
   private static LauncherMotors launcher = Robot.launcher;
 
   private static double inputMaxMotorPower = 0.5;
@@ -42,7 +43,7 @@ public class LauncherSpinup extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    dPadSpeed(driveController.getPOV());
+    dPadSpeed(driveController.getPOV(XboxOne.POV.dPad.getID()));
 
     if (motorPower == 0)
     {
@@ -106,7 +107,7 @@ public class LauncherSpinup extends Command {
 
   private void stopOnB()
   {
-    if (driveController.getBButton() == true)
+    if (driveController.getButton(XboxOne.Button.b.getID()) == true)
     {
       LauncherMotors.stopMotors();
       motorPower = 0;

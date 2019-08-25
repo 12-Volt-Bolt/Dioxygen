@@ -7,14 +7,15 @@
 
 package frc.robot.commands.control_commands;
 
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.statics_and_classes.classes.Dial;
+import frc.robot.statics_and_classes.controller.UniversalController;
+import frc.robot.statics_and_classes.controller.controller_profiles.XboxOne;
 
 public class Drive extends Command {
 
-  private static XboxController driveController = Robot.driveController;
+  private static UniversalController driveController = Robot.driveController;
   private static Command basicMecDrive = Robot.basicMecDrive;
   private static Command basicTankDrive = Robot.basicTankDrive;
   private static final Dial driveMode = Robot.driveMode;
@@ -38,7 +39,7 @@ public class Drive extends Command {
   @Override
   protected void execute()
   {
-    if (driveMode.incrementWhenTrue(driveController.getBackButton()))
+    if (driveMode.incrementWhenTrue(driveController.getButton(XboxOne.Button.view.getID())))
     {
       switch (driveMode.value) {
         case 0:

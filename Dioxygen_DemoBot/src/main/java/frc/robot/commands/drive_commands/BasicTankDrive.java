@@ -7,10 +7,10 @@
 
 package frc.robot.commands.drive_commands;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.statics_and_classes.controller.UniversalController;
+import frc.robot.statics_and_classes.controller.controller_profiles.XboxOne;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
@@ -18,7 +18,7 @@ import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
 public class BasicTankDrive extends Command {
 
   private Drivebase drivebase = Robot.drivebase;
-  private XboxController driveCon = Robot.driveController;
+  private UniversalController driveCon = Robot.driveController;
 
   public BasicTankDrive() {
     requires(drivebase);
@@ -33,7 +33,7 @@ public class BasicTankDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    TankDrive.arcadeDrive(driveCon.getY(Hand.kLeft), -driveCon.getX(Hand.kRight));
+    TankDrive.arcadeDrive(driveCon.getAxis(XboxOne.Axis.leftY.getID()), -driveCon.getAxis(XboxOne.Axis.rightX.getID()));
   }
 
   // Make this return true when this Command no longer needs to run execute()

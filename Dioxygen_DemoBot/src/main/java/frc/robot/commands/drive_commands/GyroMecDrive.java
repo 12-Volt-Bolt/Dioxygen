@@ -9,10 +9,10 @@ package frc.robot.commands.drive_commands;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.statics_and_classes.controller.UniversalController;
+import frc.robot.statics_and_classes.controller.controller_profiles.XboxOne;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.MecanumDrive;
 import frc.robot.subsystems.Drivebase.driveSubsystemKeys;
@@ -21,7 +21,7 @@ public class GyroMecDrive extends Command {
 
   private Drivebase drivebase = Robot.drivebase;
   
-  private XboxController driveCon = Robot.driveController;
+  private UniversalController driveCon = Robot.driveController;
   private AHRS NavXGyro = Robot.navXGyro;
 
   public GyroMecDrive() {
@@ -37,7 +37,7 @@ public class GyroMecDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    MecanumDrive.driveCartesian(driveCon.getX(Hand.kLeft), driveCon.getY(Hand.kLeft), driveCon.getX(Hand.kRight), NavXGyro.getAngle());
+    MecanumDrive.driveCartesian(driveCon.getAxis(XboxOne.Axis.leftY.getID()), driveCon.getAxis(XboxOne.Axis.leftX.getID()), driveCon.getAxis(XboxOne.Axis.rightX.getID()), NavXGyro.getAngle());
   }
 
   // Make this return true when this Command no longer needs to run execute()
