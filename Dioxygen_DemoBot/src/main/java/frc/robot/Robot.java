@@ -11,7 +11,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
@@ -27,6 +26,7 @@ import frc.robot.subsystems.ball_launcher.CompressorControl;
 import frc.robot.subsystems.ball_launcher.LauncherMotors;
 import frc.robot.subsystems.ball_launcher.SolenoidControl;
 import frc.robot.statics_and_classes.classes.*;
+import frc.robot.statics_and_classes.controller.UniversalController;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
   public static DriverStation driverStation = DriverStation.getInstance();
 
   // Controllers
-  public static final XboxController driveController = new XboxController(0);
+  public static final UniversalController driveController = new UniversalController(0);
 
   // Switches and Dials
   public static Switch ballLauncherSafety = new Switch();
